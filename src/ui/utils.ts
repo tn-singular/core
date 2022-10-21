@@ -51,6 +51,22 @@ export function groupsToEntries(collection: Record<string, UIFieldDefinition | U
   }))
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function parseOnValueProperty(value: any, definition: WidenDefaults<UIFieldDefinition>) {
+  if (definition.type === 'number') {
+    value = Number(value)
+    if (Number.isNaN(value)) {
+      console.warn(SingularWidget.tileName, '- NaN:', definition, value)
+    }
+    return value
+  }
+
+  if (definition.type === 'font') {
+    // bold property unused
+    delete value.bold
+  }
+}
+
 export type GetButtonFields<T> = keyof {
   [K in keyof T as T[K] extends Record<'defaultValue', unknown> ? never : K]: T[K]
 }
