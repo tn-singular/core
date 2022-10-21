@@ -573,6 +573,7 @@ export declare function groupsToEntries(collection: Record<string, UIFieldDefini
     id: string;
     title: string;
 })[];
+export declare function parseOnValueProperty(value: any, definition: WidenDefaults<UIFieldDefinition>): any;
 export declare type GetButtonFields<T> = keyof {
     [K in keyof T as T[K] extends Record<'defaultValue', unknown> ? never : K]: T[K];
 };
