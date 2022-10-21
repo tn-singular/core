@@ -64,7 +64,10 @@ export function parseOnValueProperty(value: any, definition: WidenDefaults<UIFie
   if (definition.type === 'font') {
     // bold property unused
     delete value.bold
+    return value
   }
+
+  return value
 }
 
 export type GetButtonFields<T> = keyof {
