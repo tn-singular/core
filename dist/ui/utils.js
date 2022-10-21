@@ -48,6 +48,8 @@ export function parseOnValueProperty(value, definition) {
     if (definition.type === 'font') {
         // bold property unused
         delete value.bold;
+        return value;
     }
+    return value;
 }
 //# sourceMappingURL=utils.js.map
