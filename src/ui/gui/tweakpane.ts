@@ -45,6 +45,10 @@ export function addTweakpaneInputs({
 
     for (const fieldName of childIds) {
       const field = fields[fieldName]
+      if (!field) {
+        console.warn(`No field found for ${fieldName}`)
+        continue
+      }
 
       switch (field.type) {
         case 'number': {
@@ -124,12 +128,16 @@ export function addTweakpaneInputs({
         }
 
         default: {
-          const input = folder.addInput(get(controls), fieldName, {
-            label: field.title,
-          })
-          input.on('change', (val) => {
-            set(controls[fieldName], val.value)
-          })
+          try {
+            const input = folder.addInput(get(controls), fieldName, {
+              label: field.title,
+            })
+            input.on('change', (val) => {
+              set(controls[fieldName], val.value)
+            })
+          } catch (e) {
+            console.error(`Couldn't add input: ${JSON.stringify(field)} in group ${groupName}`)
+          }
           break
         }
       }
