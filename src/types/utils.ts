@@ -4,3 +4,6 @@ export type ExpandRecursively<T> = T extends object
     ? { [K in keyof O]: ExpandRecursively<O[K]> }
     : never
   : T
+
+export type Seconds = number
+export type Milliseconds = number

@@ -1,10 +1,8 @@
-// eslint-disable-next-line import/export
-export * from './types/global'
-
 export * from './color/tailwind'
 export * from './color/utils'
 export * from './easing/cubic-bezier'
 export * from './easing/interpolation'
+export * from './lib/react-text-transition'
 export * from './types/animation'
 export * from './types/data/motorsport'
 export * from './types/utils'

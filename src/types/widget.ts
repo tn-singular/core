@@ -64,6 +64,7 @@ export type UIFieldDefinition =
   | SelectionsField
   | ButtonField
   | CompositionField
+  | TimeControlField
 
 type StringDefaultValue = {
   /**
@@ -371,3 +372,12 @@ type CompositionField = BasicField &
      */
     type: 'composition'
   }
+
+type TimeControlField = BasicField & {
+  type: 'timecontrol'
+  defaultValue: {
+    value: number
+    UTC: number
+    isRunning: boolean
+  }
+}
