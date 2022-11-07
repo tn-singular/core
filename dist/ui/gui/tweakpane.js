@@ -100,12 +100,30 @@ export function addTweakpaneInputs({ controls, pane, fields, groups, }) {
                     const startStop = folder.addButton({ title: 'start', label: fieldName });
                     const reset = folder.addButton({ title: 'reset', label: fieldName });
                     startStop.on('click', () => {
-                        const prev = get(controls[fieldName].isRunning);
-                        set(controls[fieldName].isRunning, !prev);
-                        startStop.title = prev ? 'start' : 'pause';
+                        const isRunning = get(controls[fieldName].isRunning);
+                        // TODO - better typing for get ufnction to handle primitives
+                        const UTC = get(controls[fieldName].UTC);
+                        const now = Date.now();
+                        if (isRunning) {
+                            // we need to stop the timer
+                            set(controls[fieldName].isRunning, false);
+                            set(controls[fieldName].UTC, now);
+                            set(controls[fieldName].ms, now - UTC);
+                            startStop.title = 'start';
+                        }
+                        else {
+                            // we need to start the timer
+                            set(controls[fieldName].isRunning, true);
+                            set(controls[fieldName].UTC, now);
+                            // dont update ms as in this state we must have been paused previously
+                            startStop.title = 'stop';
+                        }
                     });
                     reset.on('click', () => {
+                        // stop the timer and reset value
                         set(controls[fieldName].isRunning, false);
+                        set(controls[fieldName].UTC, Date.now());
+                        set(controls[fieldName].value, 0);
                         startStop.title = 'start';
                     });
                     break;
