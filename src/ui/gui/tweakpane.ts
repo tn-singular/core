@@ -173,7 +173,7 @@ export function addTweakpaneInputs({
             // stop the timer and reset value
             set(controls[fieldName].isRunning, false)
             set(controls[fieldName].UTC, Date.now())
-            set(controls[fieldName].value, 0)
+            set(controls[fieldName].ms, 0)
 
             startStop.title = 'start'
           })
