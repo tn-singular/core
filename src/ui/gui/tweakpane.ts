@@ -171,9 +171,11 @@ export function addTweakpaneInputs({
 
           reset.on('click', () => {
             // stop the timer and reset value
-            set(controls[fieldName].isRunning, false)
-            set(controls[fieldName].UTC, Date.now())
-            set(controls[fieldName].ms, 0)
+            batch(() => {
+              set(controls[fieldName].isRunning, false)
+              set(controls[fieldName].UTC, Date.now())
+              set(controls[fieldName].ms, 0)
+            }, useSignals)
 
             startStop.title = 'start'
           })
