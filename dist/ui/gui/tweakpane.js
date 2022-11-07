@@ -96,6 +96,19 @@ export function addTweakpaneInputs({ controls, pane, fields, groups, }) {
                     });
                     break;
                 }
+                case 'timecontrol': {
+                    const startStop = folder.addButton({ title: 'start', label: fieldName });
+                    const reset = folder.addButton({ title: 'reset', label: fieldName });
+                    startStop.on('click', () => {
+                        const prev = get(controls[fieldName].isRunning);
+                        set(controls[fieldName].isRunning, !prev);
+                        startStop.title = prev ? 'start' : 'pause';
+                    });
+                    reset.on('click', () => {
+                        set(controls[fieldName].isRunning, false);
+                        startStop.title = 'start';
+                    });
+                }
                 default: {
                     try {
                         const input = folder.addInput(get(controls), fieldName, {
