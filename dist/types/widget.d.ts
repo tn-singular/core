@@ -260,7 +260,7 @@ declare type CompositionField = BasicField & StringDefaultValue & {
 declare type TimeControlField = BasicField & {
     type: 'timecontrol';
     defaultValue: {
-        value: number;
+        ms: number;
         UTC: number;
         isRunning: boolean;
     };

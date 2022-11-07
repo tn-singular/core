@@ -376,7 +376,7 @@ type CompositionField = BasicField &
 type TimeControlField = BasicField & {
   type: 'timecontrol'
   defaultValue: {
-    value: number
+    ms: number
     UTC: number
     isRunning: boolean
   }

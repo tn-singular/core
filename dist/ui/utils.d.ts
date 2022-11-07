@@ -115,7 +115,7 @@ export declare function makeDefinition<F extends Record<string, UIFieldDefinitio
             hidden?: boolean | undefined;
             type: "timecontrol";
             defaultValue: {
-                value: number;
+                ms: number;
                 UTC: number;
                 isRunning: boolean;
             };
@@ -238,7 +238,7 @@ export declare function makeDefinition<F extends Record<string, UIFieldDefinitio
             hidden?: boolean | undefined;
             type: "timecontrol";
             defaultValue: {
-                value: number;
+                ms: number;
                 UTC: number;
                 isRunning: boolean;
             };
@@ -365,7 +365,7 @@ export declare function makeDefinition<F extends Record<string, UIFieldDefinitio
             hidden?: boolean | undefined;
             type: "timecontrol";
             defaultValue: {
-                value: number;
+                ms: number;
                 UTC: number;
                 isRunning: boolean;
             };
@@ -492,7 +492,7 @@ export declare function fieldsToEntries(collection: Record<string, UIFieldDefini
     hidden?: boolean | undefined;
     type: "timecontrol";
     defaultValue: {
-        value: number;
+        ms: number;
         UTC: number;
         isRunning: boolean;
     };
@@ -615,7 +615,7 @@ export declare function groupsToEntries(collection: Record<string, UIFieldDefini
     hidden?: boolean | undefined;
     type: "timecontrol";
     defaultValue: {
-        value: number;
+        ms: number;
         UTC: number;
         isRunning: boolean;
     };

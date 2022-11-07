@@ -50,6 +50,13 @@ export function parseOnValueProperty(value, definition) {
         delete value.bold;
         return value;
     }
+    if (definition.type === 'timecontrol') {
+        return {
+            ms: value.value,
+            UTC: value.UTC,
+            isRunning: value.isRunning,
+        };
+    }
     return value;
 }
 //# sourceMappingURL=utils.js.map

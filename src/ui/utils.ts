@@ -67,6 +67,14 @@ export function parseOnValueProperty(value: any, definition: WidenDefaults<UIFie
     return value
   }
 
+  if (definition.type === 'timecontrol') {
+    return {
+      ms: value.value,
+      UTC: value.UTC,
+      isRunning: value.isRunning,
+    }
+  }
+
   return value
 }
 
