@@ -108,6 +108,7 @@ export function addTweakpaneInputs({ controls, pane, fields, groups, }) {
                         set(controls[fieldName].isRunning, false);
                         startStop.title = 'start';
                     });
+                    break;
                 }
                 default: {
                     try {

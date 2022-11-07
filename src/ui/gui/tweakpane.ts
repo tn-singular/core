@@ -141,6 +141,8 @@ export function addTweakpaneInputs({
             set(controls[fieldName].isRunning, false)
             startStop.title = 'start'
           })
+
+          break
         }
 
         default: {
