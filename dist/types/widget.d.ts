@@ -52,7 +52,7 @@ export declare type UIGroupDefinition = {
 export declare type UIField = UIFieldDefinition & {
     id: string;
 };
-export declare type UIFieldDefinition = LabelField | TextField | TextAreaField | FontField | JSONField | NumberField | ColorField | GradientField | ImageField | CheckboxField | SelectionsField | ButtonField | CompositionField;
+export declare type UIFieldDefinition = LabelField | TextField | TextAreaField | FontField | JSONField | NumberField | ColorField | GradientField | ImageField | CheckboxField | SelectionsField | ButtonField | CompositionField | TimeControlField;
 declare type StringDefaultValue = {
     /**
      * the value assigned to a field when a new instance of a widget is created
@@ -256,5 +256,13 @@ declare type CompositionField = BasicField & StringDefaultValue & {
      * select a composition instance
      */
     type: 'composition';
+};
+declare type TimeControlField = BasicField & {
+    type: 'timecontrol';
+    defaultValue: {
+        value: number;
+        UTC: number;
+        isRunning: boolean;
+    };
 };
 export {};

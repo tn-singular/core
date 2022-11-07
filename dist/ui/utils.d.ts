@@ -110,6 +110,17 @@ export declare function makeDefinition<F extends Record<string, UIFieldDefinitio
             type: "composition";
             id: string;
         } | {
+            title: string;
+            disabled?: boolean | undefined;
+            hidden?: boolean | undefined;
+            type: "timecontrol";
+            defaultValue: {
+                value: number;
+                UTC: number;
+                isRunning: boolean;
+            };
+            id: string;
+        } | {
             width: "double" | "single";
             toolTip: string;
             childIds: string[];
@@ -220,6 +231,17 @@ export declare function makeDefinition<F extends Record<string, UIFieldDefinitio
             hidden?: boolean | undefined;
             defaultValue: string;
             type: "composition";
+            id: string;
+        } | {
+            title: string;
+            disabled?: boolean | undefined;
+            hidden?: boolean | undefined;
+            type: "timecontrol";
+            defaultValue: {
+                value: number;
+                UTC: number;
+                isRunning: boolean;
+            };
             id: string;
         } | {
             width: "double" | "single";
@@ -338,6 +360,17 @@ export declare function makeDefinition<F extends Record<string, UIFieldDefinitio
             type: "composition";
             id: string;
         } | {
+            title: string;
+            disabled?: boolean | undefined;
+            hidden?: boolean | undefined;
+            type: "timecontrol";
+            defaultValue: {
+                value: number;
+                UTC: number;
+                isRunning: boolean;
+            };
+            id: string;
+        } | {
             width: "double" | "single";
             toolTip: string;
             childIds: string[];
@@ -454,6 +487,17 @@ export declare function fieldsToEntries(collection: Record<string, UIFieldDefini
     type: "composition";
     id: string;
 } | {
+    title: string;
+    disabled?: boolean | undefined;
+    hidden?: boolean | undefined;
+    type: "timecontrol";
+    defaultValue: {
+        value: number;
+        UTC: number;
+        isRunning: boolean;
+    };
+    id: string;
+} | {
     width: "double" | "single";
     toolTip: string;
     childIds: string[];
@@ -564,6 +608,17 @@ export declare function groupsToEntries(collection: Record<string, UIFieldDefini
     hidden?: boolean | undefined;
     defaultValue: string;
     type: "composition";
+    id: string;
+} | {
+    title: string;
+    disabled?: boolean | undefined;
+    hidden?: boolean | undefined;
+    type: "timecontrol";
+    defaultValue: {
+        value: number;
+        UTC: number;
+        isRunning: boolean;
+    };
     id: string;
 } | {
     width: "double" | "single";
