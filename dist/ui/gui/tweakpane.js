@@ -1,3 +1,4 @@
+import { batch as batchSignals } from '@preact/signals';
 function get(obj) {
     return obj.peek ? obj.peek() : obj;
 }
@@ -5,7 +6,15 @@ function get(obj) {
 function set(obj, value) {
     return obj && typeof obj === 'object' && 'value' in obj ? (obj.value = value) : (obj = value);
 }
-export function addTweakpaneInputs({ controls, pane, fields, groups, }) {
+function batch(update, useSignals = false) {
+    if (useSignals) {
+        batchSignals(update);
+    }
+    else {
+        update();
+    }
+}
+export function addTweakpaneInputs({ controls, pane, fields, groups, useSignals = false, }) {
     const folders = [];
     const stateFolder = pane.addFolder({ title: 'STATE' });
     const stateInput = stateFolder.addInput(get(controls), 'in', { label: 'IN' });
@@ -106,15 +115,19 @@ export function addTweakpaneInputs({ controls, pane, fields, groups, }) {
                         const now = Date.now();
                         if (isRunning) {
                             // we need to stop the timer
-                            set(controls[fieldName].isRunning, false);
-                            set(controls[fieldName].UTC, now);
-                            set(controls[fieldName].ms, now - UTC);
+                            batch(() => {
+                                set(controls[fieldName].isRunning, false);
+                                set(controls[fieldName].UTC, now);
+                                set(controls[fieldName].ms, now - UTC);
+                            });
                             startStop.title = 'start';
                         }
                         else {
                             // we need to start the timer
-                            set(controls[fieldName].isRunning, true);
-                            set(controls[fieldName].UTC, now);
+                            batch(() => {
+                                set(controls[fieldName].isRunning, true);
+                                set(controls[fieldName].UTC, now);
+                            });
                             // dont update ms as in this state we must have been paused previously
                             startStop.title = 'stop';
                         }

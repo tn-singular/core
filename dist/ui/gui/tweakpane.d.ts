@@ -5,11 +5,12 @@ declare type RootApi = FolderApi & {
     exportPreset(): Record<string, unknown>;
     refresh(): void;
 };
-export declare function addTweakpaneInputs({ controls, pane, fields, groups, }: {
+export declare function addTweakpaneInputs({ controls, pane, fields, groups, useSignals, }: {
     controls: any;
     pane: RootApi;
     fields: Record<string, UIFieldDefinition>;
     groups: Record<string, UIGroupDefinition>;
+    useSignals?: boolean;
 }): {
     folders: FolderApi[];
 };

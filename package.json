@@ -15,6 +15,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@preact/signals": "^1.1.2",
     "@tweakpane/core": "^1.1.0",
     "browser-or-node": "^2.0.0",
     "clipboardy": "^3.0.0",

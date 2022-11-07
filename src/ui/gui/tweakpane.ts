@@ -1,3 +1,4 @@
+import { batch as batchSignals } from '@preact/signals'
 import type { FolderApi } from '@tweakpane/core'
 
 import type { UIFieldDefinition, UIGroupDefinition } from '../../types/widget'
@@ -17,17 +18,27 @@ function set(obj: any, value: unknown) {
   return obj && typeof obj === 'object' && 'value' in obj ? (obj.value = value) : (obj = value)
 }
 
+function batch(update: () => void, useSignals = false) {
+  if (useSignals) {
+    batchSignals(update)
+  } else {
+    update()
+  }
+}
+
 export function addTweakpaneInputs({
   controls,
   pane,
   fields,
   groups,
+  useSignals = false,
 }: {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   controls: any
   pane: RootApi
   fields: Record<string, UIFieldDefinition>
   groups: Record<string, UIGroupDefinition>
+  useSignals?: boolean
 }) {
   const folders: FolderApi[] = []
 
@@ -139,15 +150,19 @@ export function addTweakpaneInputs({
 
             if (isRunning) {
               // we need to stop the timer
-              set(controls[fieldName].isRunning, false)
-              set(controls[fieldName].UTC, now)
-              set(controls[fieldName].ms, now - UTC)
+              batch(() => {
+                set(controls[fieldName].isRunning, false)
+                set(controls[fieldName].UTC, now)
+                set(controls[fieldName].ms, now - UTC)
+              })
 
               startStop.title = 'start'
             } else {
               // we need to start the timer
-              set(controls[fieldName].isRunning, true)
-              set(controls[fieldName].UTC, now)
+              batch(() => {
+                set(controls[fieldName].isRunning, true)
+                set(controls[fieldName].UTC, now)
+              })
               // dont update ms as in this state we must have been paused previously
 
               startStop.title = 'stop'

@@ -1,6 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
+  '@preact/signals': ^1.1.2
   '@react-spring/web': ^9.5.5
   '@tsconfig/vite-react': ^1.0.1
   '@tweakpane/core': ^1.1.0
@@ -22,6 +23,7 @@ specifiers:
   typescript: ^4.8.4
 
 dependencies:
+  '@preact/signals': 1.1.2_preact@10.11.2
   '@tweakpane/core': 1.1.0
   browser-or-node: 2.0.0
   clipboardy: 3.0.0
@@ -115,6 +117,19 @@ packages:
       tiny-glob: 0.2.9
       tslib: 2.4.0
     dev: true
+
+  /@preact/signals-core/1.2.2:
+    resolution: {integrity: sha512-z3/bCj7rRA21RJb4FeJ4guCrD1CQbaURHkCTunUWQpxUMAFOPXCD8tSFqERyGrrcSb4T3Hrmdc1OAl0LXBHwiw==}
+    dev: false
+
+  /@preact/signals/1.1.2_preact@10.11.2:
+    resolution: {integrity: sha512-MLNNrICSllHBhpXBvXbl7K5L1HmIjuTzgBw+zdODqjM/cLGPXdYiAWt4lqXlrxNavYdoU4eljb+TLE+DRL+6yw==}
+    peerDependencies:
+      preact: 10.x
+    dependencies:
+      '@preact/signals-core': 1.2.2
+      preact: 10.11.2
+    dev: false
 
   /@react-spring/animated/9.5.5_react@18.2.0:
     resolution: {integrity: sha512-glzViz7syQ3CE6BQOwAyr75cgh0qsihm5lkaf24I0DfU63cMm/3+br299UEYkuaHNmfDfM414uktiPlZCNJbQA==}
@@ -1440,7 +1455,6 @@ packages:
 
   /preact/10.11.2:
     resolution: {integrity: sha512-skAwGDFmgxhq1DCBHke/9e12ewkhc7WYwjuhHB8HHS8zkdtITXLRmUMTeol2ldxvLwYtwbFeifZ9uDDWuyL4Iw==}
-    dev: true
 
   /prelude-ls/1.2.1:
     resolution: {integrity: sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==}
