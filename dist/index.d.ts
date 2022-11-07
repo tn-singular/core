@@ -5,6 +5,7 @@ export * from './easing/interpolation';
 export * from './lib/react-text-transition';
 export * from './types/animation';
 export * from './types/data/motorsport';
+export * from './types/global';
 export * from './types/utils';
 export * from './types/widget';
 export * from './ui/gui/tweakpane';
