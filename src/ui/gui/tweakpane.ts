@@ -18,7 +18,7 @@ function set(obj: any, value: unknown) {
   return obj && typeof obj === 'object' && 'value' in obj ? (obj.value = value) : (obj = value)
 }
 
-function batch(update: () => void, useSignals = false) {
+function batch(update: () => void, useSignals: boolean) {
   if (useSignals) {
     batchSignals(update)
   } else {
@@ -154,7 +154,7 @@ export function addTweakpaneInputs({
                 set(controls[fieldName].isRunning, false)
                 set(controls[fieldName].UTC, now)
                 set(controls[fieldName].ms, now - UTC)
-              })
+              }, useSignals)
 
               startStop.title = 'start'
             } else {
@@ -162,7 +162,7 @@ export function addTweakpaneInputs({
               batch(() => {
                 set(controls[fieldName].isRunning, true)
                 set(controls[fieldName].UTC, now)
-              })
+              }, useSignals)
               // dont update ms as in this state we must have been paused previously
 
               startStop.title = 'stop'

@@ -6,7 +6,7 @@ function get(obj) {
 function set(obj, value) {
     return obj && typeof obj === 'object' && 'value' in obj ? (obj.value = value) : (obj = value);
 }
-function batch(update, useSignals = false) {
+function batch(update, useSignals) {
     if (useSignals) {
         batchSignals(update);
     }
@@ -119,7 +119,7 @@ export function addTweakpaneInputs({ controls, pane, fields, groups, useSignals 
                                 set(controls[fieldName].isRunning, false);
                                 set(controls[fieldName].UTC, now);
                                 set(controls[fieldName].ms, now - UTC);
-                            });
+                            }, useSignals);
                             startStop.title = 'start';
                         }
                         else {
@@ -127,7 +127,7 @@ export function addTweakpaneInputs({ controls, pane, fields, groups, useSignals 
                             batch(() => {
                                 set(controls[fieldName].isRunning, true);
                                 set(controls[fieldName].UTC, now);
-                            });
+                            }, useSignals);
                             // dont update ms as in this state we must have been paused previously
                             startStop.title = 'stop';
                         }
