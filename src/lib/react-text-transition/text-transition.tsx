@@ -2,7 +2,7 @@ import type { SpringConfig } from '@react-spring/web'
 import { useSpring, useTransition, animated, config } from '@react-spring/web'
 import type { ComponentChildren } from 'preact'
 import type { CSSProperties } from 'preact/compat'
-import { useRef, useState, useEffect } from 'preact/hooks'
+import { useRef, useState, useLayoutEffect } from 'preact/hooks'
 import type { JSXInternal } from 'preact/src/jsx'
 
 type Alignment = 'left' | 'right' | 'center'
@@ -31,7 +31,7 @@ const justification: Record<Alignment, string> = {
 const transitionDefaults = {
   fromDown: { opacity: 0, transform: `translateY(-100%)` },
   fromUp: { opacity: 0, transform: `translateY(100%)` },
-  enter: { opacity: 0, transform: `translateY(0%)` },
+  enter: { opacity: 1, transform: `translateY(0%)` },
   leaveDown: { opacity: 0, transform: `translateY(100%)`, position: 'absolute' },
   leaveUp: { opacity: 0, transform: `translateY(-100%)`, position: 'absolute' },
 }
@@ -67,7 +67,7 @@ const TextTransition: React.FC<TextTransitionProps> = (props) => {
   const currentRef = useRef<HTMLDivElement>(null)
   const heightRef = useRef<number | string>('auto')
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     initialRun.current = false
 
     const elem = currentRef.current
@@ -104,7 +104,7 @@ const TextTransition: React.FC<TextTransitionProps> = (props) => {
     >
       {transitions((styles, item) => (
         <animated.div
-          style={styles}
+          style={{ ...styles }}
           ref={item === children ? currentRef : undefined}
           children={item}
         />
