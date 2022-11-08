@@ -1,6 +1,11 @@
 import { jsx as _jsx } from "preact/jsx-runtime";
 import { useSpring, useTransition, animated, config } from '@react-spring/web';
 import { useRef, useState, useEffect } from 'preact/hooks';
+const justification = {
+    left: 'flex-start',
+    center: 'center',
+    right: 'flex-end',
+};
 const transitionDefaults = {
     fromDown: { opacity: 0, transform: `translateY(-100%)` },
     fromUp: { opacity: 0, transform: `translateY(100%)` },
@@ -9,9 +14,10 @@ const transitionDefaults = {
     leaveUp: { opacity: 0, transform: `translateY(-100%)`, position: 'absolute' },
 };
 const TextTransition = (props) => {
-    const { direction = 'up', inline = false, springConfig = config.default, delay = 0, className, style, children, from, enter, leave, } = props;
+    const { direction = 'up', align = 'center', inline = false, springConfig = config.default, delay = 0, class: className, style, children, from, enter, leave, } = props;
     const initialRun = useRef(true);
     const transitions = useTransition([children], {
+        // TODO - implement yoyo
         from: from ?? transitionDefaults[direction === 'down' ? 'fromDown' : 'fromUp'],
         enter: enter ?? transitionDefaults.enter,
         leave: leave ?? transitionDefaults[direction === 'down' ? 'leaveDown' : 'leaveUp'],
@@ -44,8 +50,9 @@ const TextTransition = (props) => {
             ...style,
             whiteSpace: inline ? 'nowrap' : 'normal',
             display: inline ? 'inline-flex' : 'flex',
+            justifyContent: justification[align],
             height: heightRef.current,
-        }, children: transitions((styles, item) => (_jsx(animated.div, { style: { ...styles, width: '100%' }, ref: item === children ? currentRef : undefined, children: item }))) }));
+        }, children: transitions((styles, item) => (_jsx(animated.div, { style: styles, ref: item === children ? currentRef : undefined, children: item }))) }));
 };
 export default TextTransition;
 //# sourceMappingURL=text-transition.js.map

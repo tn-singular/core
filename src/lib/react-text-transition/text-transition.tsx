@@ -5,17 +5,27 @@ import type { CSSProperties } from 'preact/compat'
 import { useRef, useState, useEffect } from 'preact/hooks'
 import type { JSXInternal } from 'preact/src/jsx'
 
+type Alignment = 'left' | 'right' | 'center'
+
 type TextTransitionProps = {
   readonly direction?: 'up' | 'down'
+  readonly yoyo?: boolean
+  readonly align?: Alignment
   readonly inline?: boolean
   readonly delay?: number
   readonly springConfig?: SpringConfig
-  readonly className?: string
+  readonly class?: string
   readonly style?: CSSProperties
   readonly children: ComponentChildren
   readonly from?: JSXInternal.CSSProperties
   readonly enter?: JSXInternal.CSSProperties
   readonly leave?: JSXInternal.CSSProperties
+}
+
+const justification: Record<Alignment, string> = {
+  left: 'flex-start',
+  center: 'center',
+  right: 'flex-end',
 }
 
 const transitionDefaults = {
@@ -29,10 +39,11 @@ const transitionDefaults = {
 const TextTransition: React.FC<TextTransitionProps> = (props) => {
   const {
     direction = 'up',
+    align = 'center',
     inline = false,
     springConfig = config.default,
     delay = 0,
-    className,
+    class: className,
     style,
     children,
     from,
@@ -43,6 +54,7 @@ const TextTransition: React.FC<TextTransitionProps> = (props) => {
   const initialRun = useRef(true)
 
   const transitions = useTransition([children], {
+    // TODO - implement yoyo
     from: from ?? transitionDefaults[direction === 'down' ? 'fromDown' : 'fromUp'],
     enter: enter ?? transitionDefaults.enter,
     leave: leave ?? transitionDefaults[direction === 'down' ? 'leaveDown' : 'leaveUp'],
@@ -86,12 +98,13 @@ const TextTransition: React.FC<TextTransitionProps> = (props) => {
         ...style,
         whiteSpace: inline ? 'nowrap' : 'normal',
         display: inline ? 'inline-flex' : 'flex',
+        justifyContent: justification[align],
         height: heightRef.current,
       }}
     >
       {transitions((styles, item) => (
         <animated.div
-          style={{ ...styles, width: '100%' }}
+          style={styles}
           ref={item === children ? currentRef : undefined}
           children={item}
         />
