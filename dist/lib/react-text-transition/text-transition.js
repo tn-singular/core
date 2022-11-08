@@ -1,17 +1,20 @@
 import { jsx as _jsx } from "preact/jsx-runtime";
 import { useSpring, useTransition, animated, config } from '@react-spring/web';
 import { useRef, useState, useEffect } from 'preact/hooks';
+const transitionDefaults = {
+    fromDown: { opacity: 0, transform: `translateY(-100%)` },
+    fromUp: { opacity: 0, transform: `translateY(100%)` },
+    enter: { opacity: 0, transform: `translateY(0%)` },
+    leaveDown: { opacity: 0, transform: `translateY(100%)`, position: 'absolute' },
+    leaveUp: { opacity: 0, transform: `translateY(-100%)`, position: 'absolute' },
+};
 const TextTransition = (props) => {
-    const { direction = 'up', inline = false, springConfig = config.default, delay = 0, className, style, children, } = props;
+    const { direction = 'up', inline = false, springConfig = config.default, delay = 0, className, style, children, from, enter, leave, } = props;
     const initialRun = useRef(true);
     const transitions = useTransition([children], {
-        from: { opacity: 0, transform: `translateY(${direction === 'down' ? '-100%' : '100%'})` },
-        enter: { opacity: 1, transform: 'translateY(0%)' },
-        leave: {
-            opacity: 0,
-            transform: `translateY(${direction === 'down' ? '100%' : '-100%'})`,
-            position: 'absolute',
-        },
+        from: from ?? transitionDefaults[direction === 'down' ? 'fromDown' : 'fromUp'],
+        enter: enter ?? transitionDefaults.enter,
+        leave: leave ?? transitionDefaults[direction === 'down' ? 'leaveDown' : 'leaveUp'],
         config: springConfig,
         immediate: initialRun.current,
         delay: !initialRun.current ? delay : undefined,

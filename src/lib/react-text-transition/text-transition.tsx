@@ -3,6 +3,7 @@ import { useSpring, useTransition, animated, config } from '@react-spring/web'
 import type { ComponentChildren } from 'preact'
 import type { CSSProperties } from 'preact/compat'
 import { useRef, useState, useEffect } from 'preact/hooks'
+import type { JSXInternal } from 'preact/src/jsx'
 
 type TextTransitionProps = {
   readonly direction?: 'up' | 'down'
@@ -12,6 +13,17 @@ type TextTransitionProps = {
   readonly className?: string
   readonly style?: CSSProperties
   readonly children: ComponentChildren
+  readonly from?: JSXInternal.CSSProperties
+  readonly enter?: JSXInternal.CSSProperties
+  readonly leave?: JSXInternal.CSSProperties
+}
+
+const transitionDefaults = {
+  fromDown: { opacity: 0, transform: `translateY(-100%)` },
+  fromUp: { opacity: 0, transform: `translateY(100%)` },
+  enter: { opacity: 0, transform: `translateY(0%)` },
+  leaveDown: { opacity: 0, transform: `translateY(100%)`, position: 'absolute' },
+  leaveUp: { opacity: 0, transform: `translateY(-100%)`, position: 'absolute' },
 }
 
 const TextTransition: React.FC<TextTransitionProps> = (props) => {
@@ -23,18 +35,17 @@ const TextTransition: React.FC<TextTransitionProps> = (props) => {
     className,
     style,
     children,
+    from,
+    enter,
+    leave,
   } = props
 
   const initialRun = useRef(true)
 
   const transitions = useTransition([children], {
-    from: { opacity: 0, transform: `translateY(${direction === 'down' ? '-100%' : '100%'})` },
-    enter: { opacity: 1, transform: 'translateY(0%)' },
-    leave: {
-      opacity: 0,
-      transform: `translateY(${direction === 'down' ? '100%' : '-100%'})`,
-      position: 'absolute',
-    },
+    from: from ?? transitionDefaults[direction === 'down' ? 'fromDown' : 'fromUp'],
+    enter: enter ?? transitionDefaults.enter,
+    leave: leave ?? transitionDefaults[direction === 'down' ? 'leaveDown' : 'leaveUp'],
     config: springConfig,
     immediate: initialRun.current,
     delay: !initialRun.current ? delay : undefined,
