@@ -14,6 +14,7 @@ declare type TextTransitionProps = {
     readonly springConfig?: SpringConfig;
     readonly class?: string;
     readonly style?: CSSProperties;
+    readonly childStyle?: CSSProperties;
     readonly children: ComponentChildren;
     readonly from?: JSXInternal.CSSProperties;
     readonly enter?: JSXInternal.CSSProperties;

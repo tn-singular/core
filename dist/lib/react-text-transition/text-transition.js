@@ -19,7 +19,7 @@ const childEllipsisStyles = {
     textOverflow: 'ellipsis',
 };
 const TextTransition = (props) => {
-    const { direction = 'up', align = 'center', inline = false, ellipsis = false, nowrap = false, springConfig = config.default, delay = 0, class: className, style, children, from, enter, leave, } = props;
+    const { direction = 'up', align = 'center', inline = false, ellipsis = false, nowrap = false, springConfig = config.default, delay = 0, class: className, style, childStyle, children, from, enter, leave, } = props;
     const initialRun = useRef(true);
     const transitions = useTransition([children], {
         // TODO - implement yoyo
@@ -59,10 +59,10 @@ const TextTransition = (props) => {
             overflow: ellipsis ? 'hidden' : 'initial',
             ...style,
         }, children: transitions((styles, item) => (_jsx(animated.div, { style: ellipsis
-                ? { ...styles, ...childEllipsisStyles }
+                ? { ...styles, ...childStyle, ...childEllipsisStyles }
                 : nowrap
-                    ? { ...styles, whiteSpace: 'nowrap' }
-                    : { ...styles }, ref: item === children ? currentRef : undefined, children: item }))) }));
+                    ? { ...styles, ...childStyle, whiteSpace: 'nowrap' }
+                    : { ...styles, ...childStyle }, ref: item === children ? currentRef : undefined, children: item }))) }));
 };
 export default TextTransition;
 //# sourceMappingURL=text-transition.js.map

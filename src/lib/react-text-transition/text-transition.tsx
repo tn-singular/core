@@ -18,6 +18,7 @@ type TextTransitionProps = {
   readonly springConfig?: SpringConfig
   readonly class?: string
   readonly style?: CSSProperties
+  readonly childStyle?: CSSProperties
   readonly children: ComponentChildren
   readonly from?: JSXInternal.CSSProperties
   readonly enter?: JSXInternal.CSSProperties
@@ -55,6 +56,7 @@ const TextTransition: React.FC<TextTransitionProps> = (props) => {
     delay = 0,
     class: className,
     style,
+    childStyle,
     children,
     from,
     enter,
@@ -117,10 +119,10 @@ const TextTransition: React.FC<TextTransitionProps> = (props) => {
         <animated.div
           style={
             ellipsis
-              ? { ...styles, ...childEllipsisStyles }
+              ? { ...styles, ...childStyle, ...childEllipsisStyles }
               : nowrap
-              ? { ...styles, whiteSpace: 'nowrap' }
-              : { ...styles }
+              ? { ...styles, ...childStyle, whiteSpace: 'nowrap' }
+              : { ...styles, ...childStyle }
           }
           ref={item === children ? currentRef : undefined}
           children={item}
