@@ -12,6 +12,7 @@ type TextTransitionProps = {
   readonly yoyo?: boolean
   readonly align?: Alignment
   readonly inline?: boolean
+  readonly ellipsis?: boolean
   readonly delay?: number
   readonly springConfig?: SpringConfig
   readonly class?: string
@@ -36,11 +37,18 @@ const transitionDefaults = {
   leaveUp: { opacity: 0, transform: `translateY(-100%)`, position: 'absolute' },
 }
 
+const childEllipsisStyles = {
+  overflow: 'hidden',
+  whiteSpace: 'nowrap',
+  textOverflow: 'ellipsis',
+}
+
 const TextTransition: React.FC<TextTransitionProps> = (props) => {
   const {
     direction = 'up',
     align = 'center',
     inline = false,
+    ellipsis = false,
     springConfig = config.default,
     delay = 0,
     class: className,
@@ -95,16 +103,17 @@ const TextTransition: React.FC<TextTransitionProps> = (props) => {
       className={combinedClassName}
       style={{
         ...(inline && !initialRun.current ? widthTransition : undefined),
-        ...style,
         whiteSpace: inline ? 'nowrap' : 'normal',
         display: inline ? 'inline-flex' : 'flex',
         justifyContent: justification[align],
         height: heightRef.current,
+        overflow: ellipsis ? 'hidden' : 'initial',
+        ...style,
       }}
     >
       {transitions((styles, item) => (
         <animated.div
-          style={{ ...styles }}
+          style={ellipsis ? { ...styles, ...childEllipsisStyles } : { ...styles }}
           ref={item === children ? currentRef : undefined}
           children={item}
         />
