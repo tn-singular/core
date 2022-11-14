@@ -13,6 +13,7 @@ type TextTransitionProps = {
   readonly align?: Alignment
   readonly inline?: boolean
   readonly ellipsis?: boolean
+  readonly nowrap?: boolean
   readonly delay?: number
   readonly springConfig?: SpringConfig
   readonly class?: string
@@ -49,6 +50,7 @@ const TextTransition: React.FC<TextTransitionProps> = (props) => {
     align = 'center',
     inline = false,
     ellipsis = false,
+    nowrap = false,
     springConfig = config.default,
     delay = 0,
     class: className,
@@ -113,7 +115,13 @@ const TextTransition: React.FC<TextTransitionProps> = (props) => {
     >
       {transitions((styles, item) => (
         <animated.div
-          style={ellipsis ? { ...styles, ...childEllipsisStyles } : { ...styles }}
+          style={
+            ellipsis
+              ? { ...styles, ...childEllipsisStyles }
+              : nowrap
+              ? { ...styles, whiteSpace: 'nowrap' }
+              : { ...styles }
+          }
           ref={item === children ? currentRef : undefined}
           children={item}
         />

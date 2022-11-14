@@ -9,6 +9,7 @@ declare type TextTransitionProps = {
     readonly align?: Alignment;
     readonly inline?: boolean;
     readonly ellipsis?: boolean;
+    readonly nowrap?: boolean;
     readonly delay?: number;
     readonly springConfig?: SpringConfig;
     readonly class?: string;
