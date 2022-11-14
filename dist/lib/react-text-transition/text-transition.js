@@ -13,8 +13,13 @@ const transitionDefaults = {
     leaveDown: { opacity: 0, transform: `translateY(100%)`, position: 'absolute' },
     leaveUp: { opacity: 0, transform: `translateY(-100%)`, position: 'absolute' },
 };
+const childEllipsisStyles = {
+    overflow: 'hidden',
+    whiteSpace: 'nowrap',
+    textOverflow: 'ellipsis',
+};
 const TextTransition = (props) => {
-    const { direction = 'up', align = 'center', inline = false, springConfig = config.default, delay = 0, class: className, style, children, from, enter, leave, } = props;
+    const { direction = 'up', align = 'center', inline = false, ellipsis = false, springConfig = config.default, delay = 0, class: className, style, children, from, enter, leave, } = props;
     const initialRun = useRef(true);
     const transitions = useTransition([children], {
         // TODO - implement yoyo
@@ -47,12 +52,13 @@ const TextTransition = (props) => {
     const combinedClassName = className ? `text-transition ${className}` : 'text-transition';
     return (_jsx(animated.div, { className: combinedClassName, style: {
             ...(inline && !initialRun.current ? widthTransition : undefined),
-            ...style,
             whiteSpace: inline ? 'nowrap' : 'normal',
             display: inline ? 'inline-flex' : 'flex',
             justifyContent: justification[align],
             height: heightRef.current,
-        }, children: transitions((styles, item) => (_jsx(animated.div, { style: { ...styles }, ref: item === children ? currentRef : undefined, children: item }))) }));
+            overflow: ellipsis ? 'hidden' : 'initial',
+            ...style,
+        }, children: transitions((styles, item) => (_jsx(animated.div, { style: ellipsis ? { ...styles, ...childEllipsisStyles } : { ...styles }, ref: item === children ? currentRef : undefined, children: item }))) }));
 };
 export default TextTransition;
 //# sourceMappingURL=text-transition.js.map
