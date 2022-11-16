@@ -39,9 +39,11 @@ const TextTransition = (props) => {
         if (!elem) {
             return;
         }
-        const { width, height } = elem.getBoundingClientRect();
-        setWidth(width);
-        heightRef.current = height;
+        const clientWidth = elem.clientWidth;
+        const clientHeight = elem.clientHeight;
+        const { width: boundingWidth, height: boundingHeight } = elem.getBoundingClientRect();
+        setWidth(Math.max(clientWidth, boundingWidth));
+        heightRef.current = Math.max(clientHeight, boundingHeight);
     }, [children, setWidth, currentRef]);
     const widthTransition = useSpring({
         to: { width },
