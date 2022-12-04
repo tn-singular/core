@@ -1,5 +1,5 @@
 import type { Expand } from '../types/utils';
-import type { UIFieldDefinition, UIGroupDefinition, Alignment } from '../types/widget';
+import type { UIFieldDefinition, UIGroupDefinition, Alignment, GradientField, Tinycolor, BasicField } from '../types/widget';
 export declare function makeFields<T extends Record<string, UIFieldDefinition>>(fields: T): T;
 export declare function makeGroups<T extends Record<string, UIGroupDefinition>>(groups: T): T;
 export declare function makeDefinition<F extends Record<string, UIFieldDefinition>, G extends Record<string, UIGroupDefinition>>(fields: F, groups?: G): {
@@ -68,7 +68,32 @@ export declare function makeDefinition<F extends Record<string, UIFieldDefinitio
             disabled?: boolean | undefined;
             hidden?: boolean | undefined;
             type: "color";
-            defaultValue: import("../types/widget").Tinycolor;
+            defaultValue: Tinycolor;
+            id: string;
+        } | {
+            title: string;
+            disabled?: boolean | undefined;
+            hidden?: boolean | undefined;
+            type: "gradient";
+            defaultValue: {
+                type: "solid" | "linear" | "radial";
+                solidColor: Tinycolor;
+                stops: {
+                    color: `#${string}`;
+                    offset: number;
+                    opacity: number;
+                }[];
+                offset: string | number;
+                angle: string | number;
+                scale: string | number;
+                spreadMethod: "pad" | "reflect" | "repeat";
+                keepAspect: boolean;
+                centerX: string | number;
+                centerY: string | number;
+                radius: string | number;
+                focalAngle: string | number;
+                focalDistance: string | number;
+            };
             id: string;
         } | {
             title: string;
@@ -191,7 +216,32 @@ export declare function makeDefinition<F extends Record<string, UIFieldDefinitio
             disabled?: boolean | undefined;
             hidden?: boolean | undefined;
             type: "color";
-            defaultValue: import("../types/widget").Tinycolor;
+            defaultValue: Tinycolor;
+            id: string;
+        } | {
+            title: string;
+            disabled?: boolean | undefined;
+            hidden?: boolean | undefined;
+            type: "gradient";
+            defaultValue: {
+                type: "solid" | "linear" | "radial";
+                solidColor: Tinycolor;
+                stops: {
+                    color: `#${string}`;
+                    offset: number;
+                    opacity: number;
+                }[];
+                offset: string | number;
+                angle: string | number;
+                scale: string | number;
+                spreadMethod: "pad" | "reflect" | "repeat";
+                keepAspect: boolean;
+                centerX: string | number;
+                centerY: string | number;
+                radius: string | number;
+                focalAngle: string | number;
+                focalDistance: string | number;
+            };
             id: string;
         } | {
             title: string;
@@ -318,7 +368,32 @@ export declare function makeDefinition<F extends Record<string, UIFieldDefinitio
             disabled?: boolean | undefined;
             hidden?: boolean | undefined;
             type: "color";
-            defaultValue: import("../types/widget").Tinycolor;
+            defaultValue: Tinycolor;
+            id: string;
+        } | {
+            title: string;
+            disabled?: boolean | undefined;
+            hidden?: boolean | undefined;
+            type: "gradient";
+            defaultValue: {
+                type: "solid" | "linear" | "radial";
+                solidColor: Tinycolor;
+                stops: {
+                    color: `#${string}`;
+                    offset: number;
+                    opacity: number;
+                }[];
+                offset: string | number;
+                angle: string | number;
+                scale: string | number;
+                spreadMethod: "pad" | "reflect" | "repeat";
+                keepAspect: boolean;
+                centerX: string | number;
+                centerY: string | number;
+                radius: string | number;
+                focalAngle: string | number;
+                focalDistance: string | number;
+            };
             id: string;
         } | {
             title: string;
@@ -445,7 +520,32 @@ export declare function fieldsToEntries(collection: Record<string, UIFieldDefini
     disabled?: boolean | undefined;
     hidden?: boolean | undefined;
     type: "color";
-    defaultValue: import("../types/widget").Tinycolor;
+    defaultValue: Tinycolor;
+    id: string;
+} | {
+    title: string;
+    disabled?: boolean | undefined;
+    hidden?: boolean | undefined;
+    type: "gradient";
+    defaultValue: {
+        type: "solid" | "linear" | "radial";
+        solidColor: Tinycolor;
+        stops: {
+            color: `#${string}`;
+            offset: number;
+            opacity: number;
+        }[];
+        offset: string | number;
+        angle: string | number;
+        scale: string | number;
+        spreadMethod: "pad" | "reflect" | "repeat";
+        keepAspect: boolean;
+        centerX: string | number;
+        centerY: string | number;
+        radius: string | number;
+        focalAngle: string | number;
+        focalDistance: string | number;
+    };
     id: string;
 } | {
     title: string;
@@ -568,7 +668,32 @@ export declare function groupsToEntries(collection: Record<string, UIFieldDefini
     disabled?: boolean | undefined;
     hidden?: boolean | undefined;
     type: "color";
-    defaultValue: import("../types/widget").Tinycolor;
+    defaultValue: Tinycolor;
+    id: string;
+} | {
+    title: string;
+    disabled?: boolean | undefined;
+    hidden?: boolean | undefined;
+    type: "gradient";
+    defaultValue: {
+        type: "solid" | "linear" | "radial";
+        solidColor: Tinycolor;
+        stops: {
+            color: `#${string}`;
+            offset: number;
+            opacity: number;
+        }[];
+        offset: string | number;
+        angle: string | number;
+        scale: string | number;
+        spreadMethod: "pad" | "reflect" | "repeat";
+        keepAspect: boolean;
+        centerX: string | number;
+        centerY: string | number;
+        radius: string | number;
+        focalAngle: string | number;
+        focalDistance: string | number;
+    };
     id: string;
 } | {
     title: string;
@@ -629,6 +754,22 @@ export declare function groupsToEntries(collection: Record<string, UIFieldDefini
     title: string;
 })[];
 export declare function parseOnValueProperty(value: any, definition: WidenDefaults<UIFieldDefinition>): any;
+declare type GradientSettings = GradientField['defaultValue'];
+declare type SolidGradientSettings = {
+    color: `#${string}` | Tinycolor;
+};
+declare type LinearGradientSettings = {
+    stops: GradientSettings['stops'];
+} & Partial<Pick<GradientSettings, 'offset' | 'angle' | 'scale' | 'spreadMethod' | 'keepAspect'>>;
+declare type RadialGradientSettings = {
+    stops: GradientSettings['stops'];
+} & Partial<Pick<GradientSettings, 'centerX' | 'centerY' | 'radius' | 'spreadMethod' | 'focalAngle' | 'focalDistance' | 'keepAspect'>>;
+declare type GradientFieldSettings = {
+    solid: SolidGradientSettings;
+    linear: LinearGradientSettings;
+    radial: RadialGradientSettings;
+};
+export declare function gradientField<T extends keyof GradientFieldSettings>(type: T, { title, disabled, hidden, ..._settings }: GradientFieldSettings[T] & BasicField): GradientField;
 export declare type GetButtonFields<T> = keyof {
     [K in keyof T as T[K] extends Record<'defaultValue', unknown> ? never : K]: T[K];
 };

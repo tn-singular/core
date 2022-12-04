@@ -59,9 +59,9 @@ declare type StringDefaultValue = {
      */
     defaultValue: string;
 };
-declare type GradientDefaultValue = Partial<{
+declare type GradientDefaultValue = {
     type: 'solid' | 'linear' | 'radial';
-    solidcolor: Tinycolor;
+    solidColor: Tinycolor;
     stops: {
         /**
          * hex
@@ -76,17 +76,17 @@ declare type GradientDefaultValue = Partial<{
          */
         opacity: number;
     }[];
-    offset: string;
-    angle: string;
-    scale: string;
+    offset: number | string;
+    angle: number | string;
+    scale: number | string;
     spreadMethod: 'pad' | 'reflect' | 'repeat';
-    keepAspect: true;
-    centerX: string;
-    centerY: string;
-    radius: string;
-    focalAngle: string;
-    focalDistance: string;
-}>;
+    keepAspect: boolean;
+    centerX: number | string;
+    centerY: number | string;
+    radius: number | string;
+    focalAngle: number | string;
+    focalDistance: number | string;
+};
 export declare type Alignment = 'left' | 'right' | 'center' | 'justfiy';
 declare type FontDefaultValue = {
     /**
@@ -102,7 +102,7 @@ declare type FontDefaultValue = {
         underline: boolean;
     };
 };
-declare type BasicField = {
+export declare type BasicField = {
     /**
      * the identifier of the field. This must be unique
      */
@@ -202,11 +202,12 @@ declare type ColorField = BasicField & {
     type: 'color';
     defaultValue: Tinycolor;
 };
-declare type GradientField = BasicField & GradientDefaultValue & {
+export declare type GradientField = BasicField & {
     /**
      * gradient selector to choose between color, linear or radial gradient
      */
     type: 'gradient';
+    defaultValue: GradientDefaultValue;
 };
 declare type ImageField = BasicField & StringDefaultValue & {
     /**

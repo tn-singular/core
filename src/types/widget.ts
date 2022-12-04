@@ -73,62 +73,9 @@ type StringDefaultValue = {
   defaultValue: string
 }
 
-// type GradientSolid = {
-//   type: 'solid';
-//   solidcolor: Tinycolor;
-// };
-
-// type GradientLinear = {
-//   type: 'linear';
-//   stops: {
-//     /**
-//      * hex
-//      */
-//     color: `#${string}`;
-//     /**
-//      * 0 - 1
-//      */
-//     offset: number;
-//     /**
-//      * 0 - 1
-//      */
-//     opacity: number;
-//   }[];
-//   offset: string;
-//   angle: string;
-//   scale: string;
-//   spreadMethod: 'pad' | 'reflect' | 'repeat';
-//   keepAspect: true;
-// };
-
-// type GradientRadial = {
-//   type: 'radial';
-//   stops: {
-//     /**
-//      * hex
-//      */
-//     color: `#${string}`;
-//     /**
-//      * 0 - 1
-//      */
-//     offset: number;
-//     /**
-//      * 0 - 1
-//      */
-//     opacity: number;
-//   }[];
-//   centerX: string;
-//   centerY: string;
-//   radius: string;
-//   spreadMethod: 'pad' | 'reflect' | 'repeat';
-//   focalAngle: string;
-//   focalDistance: string;
-//   keepAspect: true;
-// };
-
-type GradientDefaultValue = Partial<{
+type GradientDefaultValue = {
   type: 'solid' | 'linear' | 'radial'
-  solidcolor: Tinycolor
+  solidColor: Tinycolor
 
   stops: {
     /**
@@ -144,18 +91,18 @@ type GradientDefaultValue = Partial<{
      */
     opacity: number
   }[]
-  offset: string
-  angle: string
-  scale: string
+  offset: number | string
+  angle: number | string
+  scale: number | string
   spreadMethod: 'pad' | 'reflect' | 'repeat'
-  keepAspect: true
+  keepAspect: boolean
 
-  centerX: string
-  centerY: string
-  radius: string
-  focalAngle: string
-  focalDistance: string
-}>
+  centerX: number | string
+  centerY: number | string
+  radius: number | string
+  focalAngle: number | string
+  focalDistance: number | string
+}
 
 export type Alignment = 'left' | 'right' | 'center' | 'justfiy'
 type FontDefaultValue = {
@@ -170,7 +117,7 @@ type FontDefaultValue = {
   }
 }
 
-type BasicField = {
+export type BasicField = {
   /**
    * the identifier of the field. This must be unique
    */
@@ -308,13 +255,13 @@ type ColorField = BasicField & {
   defaultValue: Tinycolor
 }
 
-type GradientField = BasicField &
-  GradientDefaultValue & {
-    /**
-     * gradient selector to choose between color, linear or radial gradient
-     */
-    type: 'gradient'
-  }
+export type GradientField = BasicField & {
+  /**
+   * gradient selector to choose between color, linear or radial gradient
+   */
+  type: 'gradient'
+  defaultValue: GradientDefaultValue
+}
 
 type ImageField = BasicField &
   StringDefaultValue & {

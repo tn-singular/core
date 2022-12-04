@@ -14,4 +14,5 @@ export * from './ui/utils';
 export * from './utils/log';
 export * from './utils/math';
 export * from './utils/random';
+export * from './utils/sleep';
 export * from './utils/ts-helpers';

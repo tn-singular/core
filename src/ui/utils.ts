@@ -1,5 +1,12 @@
 import type { Expand } from '../types/utils'
-import type { UIFieldDefinition, UIGroupDefinition, Alignment } from '../types/widget'
+import type {
+  UIFieldDefinition,
+  UIGroupDefinition,
+  Alignment,
+  GradientField,
+  Tinycolor,
+  BasicField,
+} from '../types/widget'
 import { ensure } from '../utils/ts-helpers'
 
 export function makeFields<T extends Record<string, UIFieldDefinition>>(fields: T) {
@@ -75,7 +82,152 @@ export function parseOnValueProperty(value: any, definition: WidenDefaults<UIFie
     }
   }
 
+  if (definition.type === 'json') {
+    return JSON.parse(value)
+  }
+
   return value
+}
+
+const defaultGradientSettings: GradientSettings = {
+  type: 'solid',
+  solidColor: { r: 0, g: 0, b: 0, a: 1 },
+  stops: [
+    { color: '#000000', offset: 0, opacity: 1 },
+    { color: '#000000', offset: 1, opacity: 0 },
+  ],
+  offset: 0,
+  angle: 0,
+  scale: 100,
+  spreadMethod: 'pad',
+  keepAspect: false,
+  centerX: 50,
+  centerY: 50,
+  radius: 50,
+  focalAngle: 0,
+  focalDistance: 0,
+}
+
+type GradientSettings = GradientField['defaultValue']
+type SolidGradientSettings = { color: `#${string}` | Tinycolor }
+type LinearGradientSettings = { stops: GradientSettings['stops'] } & Partial<
+  Pick<GradientSettings, 'offset' | 'angle' | 'scale' | 'spreadMethod' | 'keepAspect'>
+>
+type RadialGradientSettings = { stops: GradientSettings['stops'] } & Partial<
+  Pick<
+    GradientSettings,
+    | 'centerX'
+    | 'centerY'
+    | 'radius'
+    | 'spreadMethod'
+    | 'focalAngle'
+    | 'focalDistance'
+    | 'keepAspect'
+  >
+>
+
+type GradientFieldSettings = {
+  solid: SolidGradientSettings
+  linear: LinearGradientSettings
+  radial: RadialGradientSettings
+}
+
+function isSolidGradientSettings(
+  settings: GradientFieldSettings[keyof GradientFieldSettings]
+): settings is SolidGradientSettings {
+  return 'color' in settings
+}
+
+export function gradientField<T extends keyof GradientFieldSettings>(
+  type: T,
+  { title, disabled, hidden, ..._settings }: GradientFieldSettings[T] & BasicField
+): GradientField {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const settings: GradientFieldSettings[T] = _settings as any
+  if (isSolidGradientSettings(settings)) {
+    let solidColor: GradientSettings['solidColor'] = { r: 0, g: 0, b: 0, a: 1 }
+    let stops: GradientSettings['stops'] = []
+    if (typeof settings.color === 'string') {
+      solidColor = hexToRgba(settings.color)
+      stops = [
+        { color: settings.color, offset: 0, opacity: 1 },
+        { color: settings.color, offset: 1, opacity: 0 },
+      ]
+    } else {
+      const hexColor = rgbToHex(settings.color, { alpha: false })
+      solidColor = settings.color
+      stops = [
+        { color: hexColor, offset: 0, opacity: 1 },
+        { color: hexColor, offset: 1, opacity: 0 },
+      ]
+    }
+    return {
+      type: 'gradient',
+      title,
+      disabled,
+      hidden,
+      defaultValue: {
+        ...defaultGradientSettings,
+        solidColor,
+        stops,
+        type,
+        ...settings,
+      },
+    }
+  } else {
+    if (settings.stops.length === 0) {
+      throw new Error(`Provide at least 1 color stop`)
+    }
+
+    return {
+      type: 'gradient',
+      title,
+      disabled,
+      hidden,
+      defaultValue: {
+        ...defaultGradientSettings,
+        solidColor: hexToRgba(settings.stops[0].color),
+        type,
+        ...settings,
+      },
+    }
+  }
+}
+
+function componentToHex(c?: number) {
+  return c?.toString(16).padStart(2, '0') ?? ''
+}
+
+function rgbToHex(
+  color: Tinycolor | Omit<Tinycolor, 'a'>,
+  settings: { alpha: boolean }
+): `#${string}` {
+  const base: `#${string}` = `#${componentToHex(color.r)}${componentToHex(color.g)}${componentToHex(
+    color.b
+  )}`
+  const hex: `#${string}` =
+    'a' in color && settings.alpha ? `${base}${componentToHex(color.a)}` : base
+  return hex
+}
+
+const hexRegex = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})?/
+function hexToRgba(hex: `#${string}`): Tinycolor {
+  const result = hex.match(hexRegex)
+  if (!result) {
+    throw new Error(`Invalid hex code provided: ${hex}`)
+  }
+
+  return {
+    r: parseInt(result[1], 16),
+    g: parseInt(result[2], 16),
+    b: parseInt(result[3], 16),
+    a: result[4] ? toPrec(parseInt(result[4], 16) / 255) : 1,
+  }
+}
+
+function toPrec(number: number, precision = 2) {
+  const factor = Math.pow(10, precision)
+  return Math.round(number * factor) / factor
 }
 
 export type GetButtonFields<T> = keyof {
