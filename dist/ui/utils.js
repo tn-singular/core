@@ -36,6 +36,16 @@ export function groupsToEntries(collection) {
         ...definition,
     }));
 }
+const gradientKeysToConvert = [
+    'offset',
+    'angle',
+    'scale',
+    'centerX',
+    'centerY',
+    'radius',
+    'focalAngle',
+    'focalDistance',
+];
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function parseOnValueProperty(value, definition) {
     if (definition.type === 'number') {
@@ -59,6 +69,11 @@ export function parseOnValueProperty(value, definition) {
     }
     if (definition.type === 'json') {
         return JSON.parse(value);
+    }
+    if (definition.type === 'gradient') {
+        for (const key of gradientKeysToConvert) {
+            value[key] = Number(value[key]);
+        }
     }
     return value;
 }
@@ -114,7 +129,6 @@ export function gradientField(type, { title, disabled, hidden, ..._settings }) {
                 solidColor,
                 stops,
                 type,
-                ...settings,
             },
         };
     }

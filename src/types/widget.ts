@@ -76,7 +76,6 @@ type StringDefaultValue = {
 type GradientDefaultValue = {
   type: 'solid' | 'linear' | 'radial'
   solidColor: Tinycolor
-
   stops: {
     /**
      * hex
@@ -91,17 +90,18 @@ type GradientDefaultValue = {
      */
     opacity: number
   }[]
-  offset: number | string
-  angle: number | string
-  scale: number | string
+
+  offset: number
+  angle: number
+  scale: number
+  centerX: number
+  centerY: number
+  radius: number
+  focalAngle: number
+  focalDistance: number
+
   spreadMethod: 'pad' | 'reflect' | 'repeat'
   keepAspect: boolean
-
-  centerX: number | string
-  centerY: number | string
-  radius: number | string
-  focalAngle: number | string
-  focalDistance: number | string
 }
 
 export type Alignment = 'left' | 'right' | 'center' | 'justfiy'

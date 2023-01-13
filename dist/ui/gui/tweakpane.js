@@ -110,7 +110,7 @@ export function addTweakpaneInputs({ controls, pane, fields, groups, useSignals 
                     const reset = folder.addButton({ title: 'reset', label: fieldName });
                     startStop.on('click', () => {
                         const isRunning = get(controls[fieldName].isRunning);
-                        // TODO - better typing for get ufnction to handle primitives
+                        // TODO - better typing for get function to handle primitives
                         const UTC = get(controls[fieldName].UTC);
                         const now = Date.now();
                         if (isRunning) {
@@ -141,6 +141,9 @@ export function addTweakpaneInputs({ controls, pane, fields, groups, useSignals 
                         }, useSignals);
                         startStop.title = 'start';
                     });
+                    break;
+                }
+                case 'button': {
                     break;
                 }
                 default: {

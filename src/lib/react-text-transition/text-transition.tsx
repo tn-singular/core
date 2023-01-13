@@ -23,6 +23,7 @@ type TextTransitionProps = {
   readonly from?: JSXInternal.CSSProperties
   readonly enter?: JSXInternal.CSSProperties
   readonly leave?: JSXInternal.CSSProperties
+  readonly height?: number
 }
 
 const justification: Record<Alignment, string> = {
@@ -61,6 +62,7 @@ const TextTransition: React.FC<TextTransitionProps> = (props) => {
     from,
     enter,
     leave,
+    height = 0,
   } = props
 
   const initialRun = useRef(true)
@@ -93,7 +95,7 @@ const TextTransition: React.FC<TextTransitionProps> = (props) => {
     const { width: boundingWidth, height: boundingHeight } = elem.getBoundingClientRect()
 
     setWidth(Math.max(clientWidth, boundingWidth))
-    heightRef.current = Math.max(clientHeight, boundingHeight)
+    heightRef.current = Math.max(clientHeight, boundingHeight, height)
   }, [children, setWidth, currentRef])
 
   const widthTransition = useSpring({

@@ -144,7 +144,7 @@ export function addTweakpaneInputs({
 
           startStop.on('click', () => {
             const isRunning = get(controls[fieldName].isRunning)
-            // TODO - better typing for get ufnction to handle primitives
+            // TODO - better typing for get function to handle primitives
             const UTC = get(controls[fieldName].UTC) as unknown as number
             const now = Date.now()
 
@@ -180,6 +180,10 @@ export function addTweakpaneInputs({
             startStop.title = 'start'
           })
 
+          break
+        }
+
+        case 'button': {
           break
         }
 

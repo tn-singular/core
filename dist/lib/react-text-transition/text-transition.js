@@ -19,7 +19,7 @@ const childEllipsisStyles = {
     textOverflow: 'ellipsis',
 };
 const TextTransition = (props) => {
-    const { direction = 'up', align = 'center', inline = false, ellipsis = false, nowrap = false, springConfig = config.default, delay = 0, class: className, style, childStyle, children, from, enter, leave, } = props;
+    const { direction = 'up', align = 'center', inline = false, ellipsis = false, nowrap = false, springConfig = config.default, delay = 0, class: className, style, childStyle, children, from, enter, leave, height = 0, } = props;
     const initialRun = useRef(true);
     const transitions = useTransition([children], {
         // TODO - implement yoyo
@@ -43,7 +43,7 @@ const TextTransition = (props) => {
         const clientHeight = elem.clientHeight;
         const { width: boundingWidth, height: boundingHeight } = elem.getBoundingClientRect();
         setWidth(Math.max(clientWidth, boundingWidth));
-        heightRef.current = Math.max(clientHeight, boundingHeight);
+        heightRef.current = Math.max(clientHeight, boundingHeight, height);
     }, [children, setWidth, currentRef]);
     const widthTransition = useSpring({
         to: { width },

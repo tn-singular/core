@@ -19,6 +19,7 @@ declare type TextTransitionProps = {
     readonly from?: JSXInternal.CSSProperties;
     readonly enter?: JSXInternal.CSSProperties;
     readonly leave?: JSXInternal.CSSProperties;
+    readonly height?: number;
 };
 declare const TextTransition: React.FC<TextTransitionProps>;
 export default TextTransition;

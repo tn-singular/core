@@ -58,6 +58,16 @@ export function groupsToEntries(collection: Record<string, UIFieldDefinition | U
   }))
 }
 
+const gradientKeysToConvert: (keyof GradientField['defaultValue'])[] = [
+  'offset',
+  'angle',
+  'scale',
+  'centerX',
+  'centerY',
+  'radius',
+  'focalAngle',
+  'focalDistance',
+]
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function parseOnValueProperty(value: any, definition: WidenDefaults<UIFieldDefinition>) {
   if (definition.type === 'number') {
@@ -84,6 +94,12 @@ export function parseOnValueProperty(value: any, definition: WidenDefaults<UIFie
 
   if (definition.type === 'json') {
     return JSON.parse(value)
+  }
+
+  if (definition.type === 'gradient') {
+    for (const key of gradientKeysToConvert) {
+      value[key] = Number(value[key])
+    }
   }
 
   return value
@@ -147,6 +163,7 @@ export function gradientField<T extends keyof GradientFieldSettings>(
   if (isSolidGradientSettings(settings)) {
     let solidColor: GradientSettings['solidColor'] = { r: 0, g: 0, b: 0, a: 1 }
     let stops: GradientSettings['stops'] = []
+
     if (typeof settings.color === 'string') {
       solidColor = hexToRgba(settings.color)
       stops = [
@@ -171,7 +188,6 @@ export function gradientField<T extends keyof GradientFieldSettings>(
         solidColor,
         stops,
         type,
-        ...settings,
       },
     }
   } else {
