@@ -196,7 +196,7 @@ export function addTweakpaneInputs({
               set(controls[fieldName], val.value)
             })
           } catch (e) {
-            console.error(`Couldn't add input: ${JSON.stringify(field)} in group ${groupName}`)
+            console.error(`Couldn't add input ${fieldName} in group ${groupName}`, field, e)
           }
           break
         }

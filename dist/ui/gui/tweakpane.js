@@ -156,7 +156,7 @@ export function addTweakpaneInputs({ controls, pane, fields, groups, useSignals 
                         });
                     }
                     catch (e) {
-                        console.error(`Couldn't add input: ${JSON.stringify(field)} in group ${groupName}`);
+                        console.error(`Couldn't add input ${fieldName} in group ${groupName}`, field, e);
                     }
                     break;
                 }

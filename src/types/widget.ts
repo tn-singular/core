@@ -7,7 +7,7 @@ export type SingularWidgetArgs = {
   onValue: (json: Record<string, unknown>) => unknown
   onButtonClicked: (buttonId: string) => unknown
   onEditComp: (...args: unknown[]) => unknown
-  onAnimation: (event: SingularAnimation['Event']) => unknown
+  onAnimation?: (event: SingularAnimation['Event']) => unknown
 }
 
 export type WidgetUI = {
