@@ -1,7 +1,20 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import type { UIFieldInput } from './types/fields'
+import type { UIFieldsInput } from './types'
 import type { Serializable } from '../types/utils'
+// import type { UIFieldInput } from './types/fields';
+
+export const identity = (id: string) => id
+
+export const camel2title = (camelCase: string) =>
+  camelCase
+    .replace(/(?<!\s)([A-Z0-9](?![A-Z0-9]))/g, (match) => ` ${match}`)
+    .replace(/[a-z](?=[0-9])/g, (match) => `${match} `)
+    .replace(/^.|\s./g, (match) => match.toUpperCase())
+    .trim()
+
+export const parserWarning = (value: Serializable | undefined, targetType: string) =>
+  console.warn(`WARN: Cannot parse as ${targetType} -`, value)
 
 export function keys<T extends object>(obj: T): (keyof T)[] {
   return Object.keys(obj) as any
@@ -31,14 +44,7 @@ export function mapEntries<T extends object, R extends [PropertyKey, unknown]>(
   return fromEntries(entries(obj).map(([key, value]) => mapper(key, value)))
 }
 
-export function unfoldDefault<
-  T extends Serializable | undefined,
-  I extends UIFieldInput = UIFieldInput
->(valueOrFunction: T | ((...args: any[]) => T), id: string, input?: I): T {
-  return typeof valueOrFunction === 'function' ? valueOrFunction(id, input) : valueOrFunction
-}
-
-export const prefixKeys = <T extends Record<string, UIFieldInput>, KP extends string>(
+export const prefixKeys = <T extends Record<string, UIFieldsInput>, KP extends string>(
   field: T,
   keyPrefix: KP
 ) => {

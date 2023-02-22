@@ -1,8 +1,6 @@
 import type { FolderApi } from 'tweakpane'
 
-// import type { UIField } from '../../../types/fields'
-
-// type FontValue = Extract<UIField, { type: 'font' }>['defaultValue']
+// type FontValue = UIFields['font']
 
 export function addFontInput(_folder?: FolderApi) {
   return undefined

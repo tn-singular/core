@@ -2,7 +2,7 @@ import { isNode } from 'browser-or-node'
 import clipboard from 'clipboardy'
 import pc from 'picocolors'
 
-import type { Model } from './types/model'
+import type { Model } from './types'
 
 export async function outputUI(model: Model) {
   if (isNode) {

@@ -10,9 +10,7 @@ import { addFontInput } from './inputs/font'
 import { addNumberInput } from './inputs/number'
 import { addTimecontrolInput } from './inputs/timecontrol'
 import type { Serializable } from '../../../types/utils'
-import type { Parsers } from '../../parsers/parsers'
-import type { ButtonHandlers } from '../../types/buttons'
-import type { Model } from '../../types/model'
+import type { Model, Parsers, ButtonHandlers } from '../../types'
 
 export function addTweakpaneInputs({
   controls,
@@ -31,12 +29,14 @@ export function addTweakpaneInputs({
   pane.registerPlugin(EssentialsPlugin)
   const folders: FolderApi[] = []
 
-  const stateFolder = pane.addFolder({ title: 'In / Out' })
-  const stateInput = stateFolder.addInput({ in: controls.in.peek() }, 'in', { label: 'In' })
+  if ('in' in controls) {
+    const stateFolder = pane.addFolder({ title: 'In / Out' })
+    const stateInput = stateFolder.addInput({ in: controls.in.peek() }, 'in', { label: 'In' })
 
-  stateInput.on('change', (val) => {
-    controls.in.value = val.value
-  })
+    stateInput.on('change', (val) => {
+      controls.in.value = val.value
+    })
+  }
 
   const groupLookup: Record<string, number> = {}
   for (const [i, group] of model.groups.entries()) {
