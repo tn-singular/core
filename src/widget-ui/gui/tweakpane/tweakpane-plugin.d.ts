@@ -1,1 +1,1 @@
-declare module "tweakpane-image-plugin";
+declare module 'tweakpane-image-plugin' {}

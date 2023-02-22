@@ -35,7 +35,7 @@
     ".history",
     "**/lib/**/*.ts",
     "*.js",
-    "tailwind.config.js",
+    "*.config.*",
     "tailwind.plugins.js",
     ".eslintrc.js",
     "vite.config.ts"

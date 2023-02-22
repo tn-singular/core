@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { batch } from '@preact/signals-core'
-import type { FolderApi, InputBindingApi } from '@tweakpane/core'
+import type { FolderApi, InputBindingApi, TpPluginBundle } from '@tweakpane/core'
 import * as EssentialsPlugin from '@tweakpane/plugin-essentials'
 import { Pane } from 'tweakpane'
 import * as TweakpaneImagePlugin from 'tweakpane-image-plugin'
@@ -25,7 +25,7 @@ export function addTweakpaneInputs({
 }) {
   const pane = new Pane()
 
-  pane.registerPlugin(TweakpaneImagePlugin)
+  pane.registerPlugin(TweakpaneImagePlugin as TpPluginBundle)
   pane.registerPlugin(EssentialsPlugin)
   const folders: FolderApi[] = []
 
