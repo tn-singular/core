@@ -1,6 +1,6 @@
 export declare const easingKeys: ("linear" | "inOutCirc" | "inCirc" | "outCirc" | "inOutQuart" | "inQuart" | "outQuart" | "inOutCubic" | "inCubic" | "outCubic" | "inOutQuad" | "inQuad" | "outQuad" | "inOutQuint" | "inQuint" | "outQuint" | "inOutBack" | "inBack" | "outBack" | "inOutQS" | "inOutQS2" | "inOutQS3" | "inOutExpo" | "inExpo" | "outExpo" | "inOutSine" | "inSine" | "outSine")[];
-export declare type EasingKeys = typeof easingKeys[number];
-export declare type EasingHandles = [number, number, number, number];
+export type EasingKeys = (typeof easingKeys)[number];
+export type EasingHandles = [number, number, number, number];
 export declare const eases: {
     handles: Record<"linear" | "inOutCirc" | "inCirc" | "outCirc" | "inOutQuart" | "inQuart" | "outQuart" | "inOutCubic" | "inCubic" | "outCubic" | "inOutQuad" | "inQuad" | "outQuad" | "inOutQuint" | "inQuint" | "outQuint" | "inOutBack" | "inBack" | "outBack" | "inOutQS" | "inOutQS2" | "inOutQS3" | "inOutExpo" | "inExpo" | "outExpo" | "inOutSine" | "inSine" | "outSine", EasingHandles>;
     css: Record<"linear" | "inOutCirc" | "inCirc" | "outCirc" | "inOutQuart" | "inQuart" | "outQuart" | "inOutCubic" | "inCubic" | "outCubic" | "inOutQuad" | "inQuad" | "outQuad" | "inOutQuint" | "inQuint" | "outQuint" | "inOutBack" | "inBack" | "outBack" | "inOutQS" | "inOutQS2" | "inOutQS3" | "inOutExpo" | "inExpo" | "outExpo" | "inOutSine" | "inSine" | "outSine", string>;

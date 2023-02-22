@@ -1,15 +1,14 @@
 import { isNode } from 'browser-or-node';
 import clipboard from 'clipboardy';
 import pc from 'picocolors';
-import { makeDefinition } from './utils';
-export async function outputUI(fields, groups) {
+export async function outputUI(model) {
     if (isNode) {
         await import('fs').then((mod) => {
             const writeFile = mod.writeFile;
-            const definition = JSON.stringify(makeDefinition(fields, groups));
+            const definition = JSON.stringify({ model });
             clipboard.writeSync(definition);
-            console.log(pc.green(`📋 Copied UI Definition @ ${new Date().toLocaleTimeString()}`));
-            writeFile('ui.json', JSON.stringify(makeDefinition(fields, groups)), () => undefined);
+            console.log(pc.green(`📋 Copied UI Model @ ${new Date().toLocaleTimeString()}`));
+            writeFile('ui.json', definition, () => undefined);
             console.log(pc.green(`💾 Updated ui.json`));
         });
     }

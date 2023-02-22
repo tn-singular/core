@@ -1,2 +1,2 @@
-import type { UIFieldDefinition, UIGroupDefinition } from '../types/widget';
-export declare function outputUI(fields: Record<string, UIFieldDefinition>, groups: Record<string, UIGroupDefinition>): Promise<void>;
+import type { Model } from './types/model';
+export declare function outputUI(model: Model): Promise<void>;

@@ -47,7 +47,7 @@ const easings = [
 ] as const
 
 export const easingKeys = easings.map((ease) => ease.id)
-export type EasingKeys = typeof easingKeys[number]
+export type EasingKeys = (typeof easingKeys)[number]
 export type EasingHandles = [number, number, number, number]
 
 const handles = Object.fromEntries(easings.map((ease) => [ease.id, ease.handles])) as Record<

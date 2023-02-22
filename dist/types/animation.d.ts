@@ -95,7 +95,7 @@ interface JumpEvent {
     time: number;
     timeline: TimelineLabel;
 }
-declare type TimelineLabel = 'In' | 'Out';
-declare type TimelineAnchor = 'In' | 'Out1' | 'Out2';
-declare type TimelineDirection = 'forward' | 'backward';
+type TimelineLabel = 'In' | 'Out';
+type TimelineAnchor = 'In' | 'Out1' | 'Out2';
+type TimelineDirection = 'forward' | 'backward';
 export {};

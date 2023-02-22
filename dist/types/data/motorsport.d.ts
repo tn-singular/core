@@ -1,5 +1,5 @@
 import type { Expand } from '../utils';
-declare type Driver = {
+type Driver = {
     id: string;
     position: number | string;
     driverNo: number;
@@ -14,14 +14,14 @@ declare type Driver = {
         fg?: string;
     };
 };
-export declare type MotorsportTime = {
+export type MotorsportTime = {
     display: string;
     raw: number | null;
     prefix?: string;
     infix?: string;
     postfix?: string;
 };
-declare type RaceLap = {
+type RaceLap = {
     lap?: number;
     lastlap: MotorsportTime;
     interval: MotorsportTime;
@@ -38,7 +38,7 @@ declare type RaceLap = {
     })[];
     change?: number;
 };
-export declare type Motorsport = {
+export type Motorsport = {
     driver: Driver;
     lap: {
         race: RaceLap;
@@ -48,11 +48,11 @@ export declare type Motorsport = {
         qual: MotorsportTime;
     };
 };
-export declare type MotorsportRecord = 'personal' | 'class' | 'track' | 'none' | null;
-export declare type MotorsportDriver = Driver;
-export declare type MotorsportRaceLap = RaceLap;
-export declare type MotorsportRow = Expand<Driver & RaceLap>;
-export declare type MotorsportMarker = ({
+export type MotorsportRecord = 'personal' | 'class' | 'track' | 'none' | null;
+export type MotorsportDriver = Driver;
+export type MotorsportRaceLap = RaceLap;
+export type MotorsportRow = Expand<Driver & RaceLap>;
+export type MotorsportMarker = ({
     className?: string;
     position?: number;
 } & {
@@ -62,14 +62,14 @@ export declare type MotorsportMarker = ({
 } | {
     marker: 'finished';
 };
-export declare type MotorsportBestLap = {
+export type MotorsportBestLap = {
     className?: string;
     position?: number;
     time: MotorsportTime | null;
     name: string;
     lap?: number;
 };
-export declare type MotorsportLiveResults = {
+export type MotorsportLiveResults = {
     title: string | undefined;
     rows: MotorsportRow[];
     markers: MotorsportMarker[];
@@ -79,7 +79,7 @@ export declare type MotorsportLiveResults = {
         position: number | string;
     }[];
 };
-export declare type MotorsportLive = {
+export type MotorsportLive = {
     results: MotorsportLiveResults[];
     flag?: string;
     raceTitle: string;
@@ -91,7 +91,7 @@ export declare type MotorsportLive = {
     };
     source: string;
 };
-export declare type GridData = {
+export type GridData = {
     row: number;
     pos1: MotorsportRow['position'] | string;
     name1: MotorsportRow['name'];
