@@ -3,17 +3,20 @@
 import type { ButtonField, CheckboxField } from './fields'
 import type { UIGroupInput, UIField, Parsers, Model } from './types'
 import { camel2title, mapValues } from './utils'
-import type { AddMissingProps, Serializable } from '../types/utils'
+import type { Serializable, UnionToIntersection } from '../types/utils'
 
 export function defineUI<T extends Record<string, UIGroupInput>>(ui: T) {
-  type FieldsUnion = T[keyof T]['fields']
-  type AllFields = AddMissingProps<FieldsUnion>
-  type Fields = { [K in keyof AllFields]: AllFields[K] }
+  type Fields = UnionToIntersection<T[keyof T]['fields']>
+
+  // type FieldsUnion = T[keyof T]['fields']
+  // type AllFields = AddMissingProps<FieldsUnion>
+  // type Fields = { [K in keyof AllFields]: AllFields[K] }
 
   type Controls = {
     [K in keyof Fields as Fields[K] extends ButtonField
       ? never
-      : K]: Fields[K] extends CheckboxField ? boolean : Fields[K]['defaultValue']
+      : // @ts-expect-error shh
+        K]: Fields[K] extends CheckboxField ? boolean : Fields[K]['defaultValue']
   }
 
   type ButtonKey = keyof {
