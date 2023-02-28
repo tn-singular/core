@@ -1,22 +1,23 @@
+import type { BaseFieldInput } from './shared'
 import { hexToRGBA } from '../../color/color'
 import type { Hex, Tinycolor } from '../../types/utils'
 import { colorToRgba } from '../parsers'
-import type { FieldInput, Parser } from '../types'
+import type { Parser } from '../types'
 import { parserWarning } from '../utils'
 
-type ColorField = {
+export interface ColorFieldInput extends BaseFieldInput {
+  parser: Parser<Tinycolor>
+}
+
+export interface ColorField extends ColorFieldInput {
   type: 'color'
   id: string
-  title: string
   defaultValue: Tinycolor
-  disabled?: boolean
-  hidden?: boolean
-  parser: Parser<Tinycolor>
 }
 
 export function createColorField(
   color: Tinycolor | Hex = '#cccccc',
-  options?: FieldInput<ColorField>
+  options?: Partial<ColorFieldInput>
 ): ColorField {
   const field = {
     type: 'color',

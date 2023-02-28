@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-types */
 
-import type { UIGroupInput, UIField, Parsers, Model, WidenFieldValue } from './types'
+import type { ButtonField, CheckboxField } from './fields'
+import type { UIGroupInput, UIField, Parsers, Model } from './types'
 import { camel2title, mapValues } from './utils'
 import type { AddMissingProps, Serializable } from '../types/utils'
 
@@ -10,17 +11,13 @@ export function defineUI<T extends Record<string, UIGroupInput>>(ui: T) {
   type Fields = { [K in keyof AllFields]: AllFields[K] }
 
   type Controls = {
-    [K in keyof Fields as Fields[K] extends { type: 'button' } ? never : K]: WidenFieldValue<
-      Fields[K]['selections'] extends {}
-        ? Fields[K]['selections'][number]['id']
-        : Fields[K]['parser'] extends {}
-        ? ReturnType<Fields[K]['parser']>
-        : Fields[K]['defaultValue']
-    >
+    [K in keyof Fields as Fields[K] extends ButtonField
+      ? never
+      : K]: Fields[K] extends CheckboxField ? boolean : Fields[K]['defaultValue']
   }
 
   type ButtonKey = keyof {
-    [K in keyof Fields as Fields[K] extends { type: 'button' } ? K : never]: K
+    [K in keyof Fields as Fields[K] extends ButtonField ? K : never]: K
   }
 
   const uiWithDefaults = mapValues(ui, (groupId, groupDefinition) => {

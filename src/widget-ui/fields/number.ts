@@ -1,13 +1,8 @@
-import type { FieldInput, Parser } from '../types'
+import type { BaseFieldInput } from './shared'
+import type { Parser } from '../types'
 import { parserWarning } from '../utils'
 
-type NumberField = {
-  type: 'number'
-  id: string
-  title: string
-  defaultValue: number
-  disabled?: boolean
-  hidden?: boolean
+export interface NumberFieldInput extends BaseFieldInput {
   parser: Parser<number>
 
   /**
@@ -36,7 +31,16 @@ type NumberField = {
   format?: string
 }
 
-export function createNumberField(number: number, options?: FieldInput<NumberField>): NumberField {
+export interface NumberField extends NumberFieldInput {
+  type: 'number'
+  id: string
+  defaultValue: number
+}
+
+export function createNumberField(
+  number: number,
+  options?: Partial<NumberFieldInput>
+): NumberField {
   const field = {
     type: 'number',
     defaultValue: number,

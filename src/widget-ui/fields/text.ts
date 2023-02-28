@@ -1,17 +1,18 @@
-import type { FieldInput, Parser } from '../types'
+import type { BaseFieldInput } from './shared'
+import type { Parser } from '../types'
 import { parserWarning } from '../utils'
 
-type TextField = {
-  type: 'text'
-  id: string
-  title: string
-  defaultValue: string
-  disabled?: boolean
-  hidden?: boolean
+export interface TextFieldInput extends BaseFieldInput {
   parser: Parser<string>
 }
 
-export function createTextField(str?: string, options?: FieldInput<TextField>): TextField {
+export interface TextField extends TextFieldInput {
+  type: 'text'
+  id: string
+  defaultValue: string
+}
+
+export function createTextField(str?: string, options?: Partial<TextFieldInput>): TextField {
   const field = {
     type: 'text',
     defaultValue: str ?? '',

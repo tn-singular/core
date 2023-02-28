@@ -1,13 +1,8 @@
-import type { FieldInput, Parser } from '../types'
+import type { BaseFieldInput } from './shared'
+import type { Parser } from '../types'
 import { parserWarning } from '../utils'
 
-type JSONField = {
-  type: 'json'
-  id: string
-  title: string
-  defaultValue: Record<string, unknown>
-  disabled?: boolean
-  hidden?: boolean
+export interface JSONFieldInput extends BaseFieldInput {
   parser: Parser<Record<string, unknown>>
 
   /**
@@ -21,9 +16,15 @@ type JSONField = {
   height: number
 }
 
+export interface JSONField extends JSONFieldInput {
+  type: 'json'
+  id: string
+  defaultValue: Record<string, unknown>
+}
+
 export function createJSONField(
   obj: Record<string, unknown>,
-  options?: FieldInput<JSONField>
+  options?: Partial<JSONFieldInput>
 ): JSONField {
   const field = {
     type: 'json',

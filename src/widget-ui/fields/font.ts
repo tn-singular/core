@@ -1,25 +1,40 @@
 import type { Serializable } from 'child_process'
 
+import type { BaseFieldInput } from './shared'
 import type { Alignment } from '../../types/utils'
-import type { Parser, FieldInput } from '../types'
+import type { Parser } from '../types'
 import { parserWarning } from '../utils'
 
-type FontField = {
+type Weight = 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900
+
+type FontData = {
+  family: string
+  weight: Weight
+}
+
+type FontFieldDefaultValue = {
+  fontData: FontData
+  alignment: Alignment
+  italic: boolean
+  underline: boolean
+}
+
+export interface FontFieldInput
+  extends BaseFieldInput,
+    FontData,
+    Omit<FontFieldDefaultValue, 'fontData'> {
+  parser: Parser<FontFieldDefaultValue>
+}
+
+export interface FontField {
   type: 'font'
   id: string
   title: string
-  defaultValue: {
-    fontData: { family: string; weight: string }
-    alignment: Alignment
-    italic: boolean
-    underline: boolean
-  }
+  defaultValue: FontFieldDefaultValue
   disabled?: boolean
   hidden?: boolean
   parser: Parser<FontField['defaultValue']>
 }
-
-type Weight = 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900
 
 export function createFontField({
   family = 'Montserrat',
@@ -28,8 +43,7 @@ export function createFontField({
   italic = false,
   underline = false,
   ...options
-}: { family?: string; weight?: Weight } & FieldInput<FontField> &
-  Partial<Omit<FontField['defaultValue'], 'fontData'>>): FontField {
+}: Partial<FontFieldInput>): FontField {
   const field = {
     type: 'font',
     defaultValue: {

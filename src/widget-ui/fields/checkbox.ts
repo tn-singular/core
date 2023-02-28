@@ -1,17 +1,16 @@
-import type { FieldInput } from '../types'
+import type { BaseFieldInput } from './shared'
 
-type CheckboxField = {
+export type CheckboxFieldInput = BaseFieldInput
+
+export interface CheckboxField extends CheckboxFieldInput {
   type: 'checkbox'
   id: string
-  title: string
-  defaultValue: boolean
-  disabled?: boolean
-  hidden?: boolean
+  defaultValue?: never
 }
 
 export function createCheckboxField(
   boolean: boolean,
-  options?: FieldInput<CheckboxField>
+  options?: Partial<CheckboxFieldInput>
 ): CheckboxField {
   const field = {
     type: 'checkbox',

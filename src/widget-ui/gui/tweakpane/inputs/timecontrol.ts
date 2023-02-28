@@ -2,7 +2,8 @@ import type { DeepSignalType } from '@deepsignal/core'
 import { batch } from '@preact/signals-core'
 import type { FolderApi } from 'tweakpane'
 
-import type { UIFields } from '../../../types'
+import type { TimeControlField } from '../../../fields'
+import type { TimeControlDefaultValue } from '../../../fields/timecontrol'
 
 export function addTimecontrolInput({
   folder,
@@ -10,8 +11,8 @@ export function addTimecontrolInput({
   controls,
 }: {
   folder: FolderApi
-  field: UIFields['timecontrol']
-  controls: DeepSignalType<Record<string, UIFields['timecontrol']['defaultValue']>>
+  field: TimeControlField
+  controls: DeepSignalType<Record<string, TimeControlDefaultValue>>
 }) {
   const opts = field.defaultValue
   const startStop = folder.addButton({ title: 'start', label: field.title })

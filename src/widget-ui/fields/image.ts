@@ -1,17 +1,18 @@
+import type { BaseFieldInput } from './shared'
 import { textFieldParser } from './text'
-import type { FieldInput, Parser } from '../types'
+import type { Parser } from '../types'
 
-type ImageField = {
-  type: 'image'
-  id: string
-  title: string
-  defaultValue: string
-  disabled?: boolean
-  hidden?: boolean
+export interface ImageFieldInput extends BaseFieldInput {
   parser: Parser<string>
 }
 
-export function createImageField(url?: string, options?: FieldInput<ImageField>): ImageField {
+export interface ImageField extends ImageFieldInput {
+  type: 'image'
+  id: string
+  defaultValue: string
+}
+
+export function createImageField(url?: string, options?: Partial<ImageFieldInput>): ImageField {
   const field = {
     type: 'image',
     defaultValue: url ?? '',

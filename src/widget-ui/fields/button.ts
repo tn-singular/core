@@ -1,15 +1,14 @@
-import type { FieldInput } from '../types'
+import type { BaseFieldInput } from './shared'
 
-type ButtonField = {
+export type ButtonFieldInput = BaseFieldInput
+
+export interface ButtonField extends ButtonFieldInput {
   type: 'button'
   id: string
-  title: string
   defaultValue?: never
-  disabled?: boolean
-  hidden?: boolean
 }
 
-export function createButtonField(options?: Omit<FieldInput<ButtonField>, 'id'>): ButtonField {
+export function createButtonField(options?: Partial<ButtonFieldInput>): ButtonField {
   const field = {
     type: 'button',
     ...options,

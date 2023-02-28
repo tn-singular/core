@@ -1,13 +1,8 @@
+import type { BaseFieldInput } from './shared'
 import { textFieldParser } from './text'
-import type { FieldInput, Parser } from '../types'
+import type { Parser } from '../types'
 
-type TextAreaField = {
-  type: 'textarea'
-  id: string
-  title: string
-  defaultValue: string
-  disabled?: boolean
-  hidden?: boolean
+export interface TextAreaFieldInput extends BaseFieldInput {
   parser: Parser<string>
 
   /**
@@ -21,9 +16,15 @@ type TextAreaField = {
   cols: number
 }
 
+export interface TextAreaField extends TextAreaFieldInput {
+  type: 'textarea'
+  id: string
+  defaultValue: string
+}
+
 export function createTextAreaField(
   str?: string,
-  options?: FieldInput<TextAreaField>
+  options?: Partial<TextAreaFieldInput>
 ): TextAreaField {
   const field = {
     type: 'textarea',

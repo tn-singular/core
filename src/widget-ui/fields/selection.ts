@@ -1,31 +1,45 @@
+import type { BaseFieldInput } from './shared'
 import { textFieldParser } from './text'
-import type { FieldInput, Parser } from '../types'
+import type { Parser } from '../types'
 import { camel2title } from '../utils'
 
-type SelectionField = {
+type ImplicitSelection = string
+type ExplicitSelection = { id: string; title: string }
+type Selection = ImplicitSelection | ExplicitSelection
+
+export interface SelectionFieldInput extends BaseFieldInput {
+  parser: Parser<number>
+}
+
+export interface SelectionField extends SelectionFieldInput {
   type: 'selection'
   id: string
-  title: string
   defaultValue: string
-  disabled?: boolean
-  hidden?: boolean
-  parser: Parser<string>
-  selections: {
-    id: string
-    title: string
-  }[]
+  selections: ExplicitSelection[]
 }
 
 export function createSelectionField(
   selection: string,
-  selections: string[],
-  options?: FieldInput<SelectionField>
+  selections: Selection[],
+  options?: Partial<SelectionFieldInput>
 ): SelectionField {
+  if (selections.length === 0) {
+    throw new Error('There must be at least 1 selection')
+  }
+
+  const sels =
+    typeof selections[0] === 'string'
+      ? (selections as ImplicitSelection[]).map((option) => ({
+          id: option,
+          title: camel2title(option),
+        }))
+      : (selections as ExplicitSelection[])
+
   const field = {
     type: 'selection',
     defaultValue: selection,
     parser: textFieldParser,
-    selections: selections.map((option) => ({ id: option, title: camel2title(option) })),
+    selections: sels,
     ...options,
   }
 

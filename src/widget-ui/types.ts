@@ -1,7 +1,32 @@
-import type { ui } from './builders'
-import type { DistributiveOmit, Serializable, WidenBoolean } from '../types/utils'
-
-export type WidenFieldValue<T> = WidenBoolean<T>
+import type {
+  ButtonField,
+  CheckboxField,
+  ColorField,
+  FontField,
+  GradientField,
+  ImageField,
+  InfoField,
+  JSONField,
+  NumberField,
+  SelectionField,
+  TextField,
+  TextAreaField,
+  TimeControlField,
+  ButtonFieldInput,
+  CheckboxFieldInput,
+  ColorFieldInput,
+  FontFieldInput,
+  GradientFieldInput,
+  ImageFieldInput,
+  InfoFieldInput,
+  JSONFieldInput,
+  NumberFieldInput,
+  SelectionFieldInput,
+  TextAreaFieldInput,
+  TextFieldInput,
+  TimeControlFieldInput,
+} from './fields'
+import type { Serializable } from '../types/utils'
 
 export type Parser<T extends Serializable = Serializable> = (value?: Serializable) => T
 export type Parsers = Record<string, Parser>
@@ -9,17 +34,41 @@ export type Parsers = Record<string, Parser>
 type ButtonCallback = (id: string) => void
 export type ButtonHandlers<T extends string[] = string[]> = Record<T[number], ButtonCallback>
 
-export type FieldInput<T> = Partial<Omit<T, 'id'>>
+interface UIFieldInputs {
+  button: ButtonFieldInput
+  checkbox: CheckboxFieldInput
+  color: ColorFieldInput
+  font: FontFieldInput
+  gradient: GradientFieldInput
+  image: ImageFieldInput
+  info: InfoFieldInput
+  json: JSONFieldInput
+  number: NumberFieldInput
+  selection: SelectionFieldInput
+  text: TextFieldInput
+  textarea: TextAreaFieldInput
+  timecontrol: TimeControlFieldInput
+}
 
-export type UIFields = {
-  [K in keyof typeof ui]: ReturnType<(typeof ui)[K]>
+export interface UIFields {
+  button: ButtonField
+  checkbox: CheckboxField
+  color: ColorField
+  font: FontField
+  gradient: GradientField
+  image: ImageField
+  info: InfoField
+  json: JSONField
+  number: NumberField
+  selection: SelectionField
+  text: TextField
+  textarea: TextAreaField
+  timecontrol: TimeControlField
 }
 
 export type UIField = UIFields[keyof UIFields]
 
-export type UIFieldInput = FieldInput<UIFields[keyof UIFields]>
-
-export type UIFieldsInput = DistributiveOmit<Partial<UIField>, 'id'>
+export type UIFieldInput = UIFieldInputs[keyof UIFieldInputs]
 
 export type UIGroupInput = Partial<Omit<UIGroup, 'childIds'>> & {
   /**

@@ -1,17 +1,18 @@
+import type { BaseFieldInput } from './shared'
 import { textFieldParser } from './text'
-import type { FieldInput, Parser } from '../types'
+import type { Parser } from '../types'
 
-type InfoField = {
-  type: 'info'
-  id: string
-  title: string
-  defaultValue: string
-  disabled?: boolean
-  hidden?: boolean
+export interface InfoFieldInput extends BaseFieldInput {
   parser: Parser<string>
 }
 
-export function createInfoField(str: string, options?: FieldInput<InfoField>): InfoField {
+export interface InfoField extends InfoFieldInput {
+  type: 'info'
+  id: string
+  defaultValue: string
+}
+
+export function createInfoField(str: string, options?: Partial<InfoFieldInput>): InfoField {
   const field = {
     type: 'info',
     defaultValue: str,

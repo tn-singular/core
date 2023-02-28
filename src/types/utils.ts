@@ -17,8 +17,6 @@ export type ExpandRecursively<T> = T extends object
     : never
   : T
 
-export type WidenBoolean<T> = T extends boolean ? boolean : T
-
 export type AllKeys<T> = T extends unknown ? keyof T : never
 
 export type AddMissingProps<T, K extends PropertyKey = AllKeys<T>> = T extends unknown

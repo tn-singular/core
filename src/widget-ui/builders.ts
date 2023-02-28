@@ -11,6 +11,7 @@ import { createSelectionField } from './fields/selection'
 import { createTextField } from './fields/text'
 import { createTextAreaField } from './fields/textarea'
 import { createTimeControlField } from './fields/timecontrol'
+import { fromEntries } from './utils'
 
 export const ui = {
   button: createButtonField,
@@ -26,4 +27,11 @@ export const ui = {
   text: createTextField,
   textarea: createTextAreaField,
   timecontrol: createTimeControlField,
+}
+
+export function createRepeatedProperties<Keys extends string, R>(
+  n: number,
+  mapper: (i: number) => [key: string, value: R]
+) {
+  return fromEntries(Array.from({ length: n }).map((_, i) => mapper(i))) as Record<Keys, R>
 }

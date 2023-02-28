@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import type { UIFieldsInput } from './types'
 import type { Serializable } from '../types/utils'
 // import type { UIFieldInput } from './types/fields';
 
@@ -44,7 +43,7 @@ export function mapEntries<T extends object, R extends [PropertyKey, unknown]>(
   return fromEntries(entries(obj).map(([key, value]) => mapper(key, value)))
 }
 
-export const prefixKeys = <T extends Record<string, UIFieldsInput>, KP extends string>(
+export const prefixKeys = <T extends Record<string, unknown>, KP extends string>(
   field: T,
   keyPrefix: KP
 ) => {

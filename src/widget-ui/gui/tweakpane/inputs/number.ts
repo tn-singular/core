@@ -1,14 +1,8 @@
 import type { FolderApi } from 'tweakpane'
 
-import type { UIFields } from '../../../types'
+import type { NumberField } from '../../../fields'
 
-export function addNumberInput({
-  folder,
-  field,
-}: {
-  folder: FolderApi
-  field: UIFields['number']
-}) {
+export function addNumberInput({ folder, field }: { folder: FolderApi; field: NumberField }) {
   return folder.addInput({ [field.id]: field.defaultValue }, field.id, {
     min: field.min,
     max: field.max,

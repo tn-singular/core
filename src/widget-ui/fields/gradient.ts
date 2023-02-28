@@ -1,39 +1,42 @@
+import type { BaseFieldInput } from './shared'
 import type { Hex, Tinycolor, UnitInterval } from '../../types/utils'
 import { colorToRgba } from '../parsers'
-import type { FieldInput, Parser } from '../types'
+import type { Parser } from '../types'
 import { parserWarning } from '../utils'
 
-export type GradientField = {
+interface GradientDefaultValue {
+  type: 'solid' | 'linear' | 'radial'
+  solidColor: Tinycolor
+  stops: {
+    color: Hex
+    offset: UnitInterval
+    opacity: UnitInterval
+  }[]
+  offset: number
+  angle: number
+  scale: number
+  centerX: number
+  centerY: number
+  radius: number
+  focalAngle: number
+  focalDistance: number
+  spreadMethod: 'pad' | 'reflect' | 'repeat'
+  keepAspect: boolean
+}
+
+export interface GradientFieldInput extends BaseFieldInput {
+  defaultValue: GradientDefaultValue
+  parser: Parser<string>
+}
+
+export interface GradientField extends GradientFieldInput {
   type: 'gradient'
   id: string
-  title: string
-  defaultValue: {
-    type: 'solid' | 'linear' | 'radial'
-    solidColor: Tinycolor
-    stops: {
-      color: Hex
-      offset: UnitInterval
-      opacity: UnitInterval
-    }[]
-    offset: number
-    angle: number
-    scale: number
-    centerX: number
-    centerY: number
-    radius: number
-    focalAngle: number
-    focalDistance: number
-    spreadMethod: 'pad' | 'reflect' | 'repeat'
-    keepAspect: boolean
-  }
-  disabled?: boolean
-  hidden?: boolean
-  parser: Parser<string>
 }
 
 export function createGradientField(
   stops: Hex[] = ['#00ffff', '#ff00ff'],
-  options?: FieldInput<GradientField>
+  options?: Partial<GradientFieldInput>
 ): GradientField {
   const field = {
     type: 'gradient',

@@ -1,21 +1,24 @@
-import type { FieldInput, Parser } from '../types'
+import type { BaseFieldInput } from './shared'
+import type { Parser } from '../types'
 import { parserWarning } from '../utils'
 
-type TimeControlField = {
-  type: 'timecontrol'
-  id: string
-  title: string
-  defaultValue: {
-    ms: number
-    UTC: number
-    isRunning: boolean
-  }
-  disabled?: boolean
-  hidden?: boolean
-  parser: Parser<TimeControlField['defaultValue']>
+export type TimeControlDefaultValue = {
+  ms: number
+  UTC: number
+  isRunning: boolean
 }
 
-export function createTimeControlField(options?: FieldInput<TimeControlField>): TimeControlField {
+export interface TimeControlFieldInput extends BaseFieldInput {
+  parser: Parser<TimeControlDefaultValue>
+}
+
+export interface TimeControlField extends TimeControlFieldInput {
+  type: 'timecontrol'
+  id: string
+  defaultValue: TimeControlDefaultValue
+}
+
+export function createTimeControlField(options?: Partial<TimeControlFieldInput>): TimeControlField {
   const field = {
     type: 'timecontrol',
     defaultValue: {
