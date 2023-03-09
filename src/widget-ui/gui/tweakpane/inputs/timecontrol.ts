@@ -1,4 +1,4 @@
-import type { DeepSignalType } from '@deepsignal/core'
+import type { Signal } from '@preact/signals-core'
 import { batch } from '@preact/signals-core'
 import type { FolderApi } from 'tweakpane'
 
@@ -12,7 +12,7 @@ export function addTimecontrolInput({
 }: {
   folder: FolderApi
   field: TimeControlField
-  controls: DeepSignalType<Record<string, TimeControlDefaultValue>>
+  controls: Record<string, Signal<TimeControlDefaultValue>>
 }) {
   const opts = field.defaultValue
   const startStop = folder.addButton({ title: 'start', label: field.title })
@@ -26,17 +26,22 @@ export function addTimecontrolInput({
     if (isRunning) {
       // we need to stop the timer
       batch(() => {
-        controls[field.id].isRunning.value = false
-        controls[field.id].UTC.value = now
-        controls[field.id].ms.value = now - UTC
+        controls[field.id].value = {
+          isRunning: false,
+          UTC: now,
+          ms: now - UTC,
+        }
       })
 
       startStop.title = 'start'
     } else {
       // we need to start the timer
       batch(() => {
-        controls[field.id].isRunning.value = true
-        controls[field.id].UTC.value = now
+        controls[field.id].value = {
+          isRunning: false,
+          UTC: now,
+          ms: controls[field.id].peek().ms,
+        }
       })
       // dont update ms as in this state we must have been paused previously
 
@@ -47,9 +52,11 @@ export function addTimecontrolInput({
   reset.on('click', () => {
     // stop the timer and reset value
     batch(() => {
-      controls[field.id].isRunning.value = false
-      controls[field.id].UTC.value = Date.now()
-      controls[field.id].ms.value = 0
+      controls[field.id].value = {
+        isRunning: false,
+        UTC: Date.now(),
+        ms: 0,
+      }
     })
 
     startStop.title = 'start'

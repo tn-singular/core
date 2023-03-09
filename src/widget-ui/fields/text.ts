@@ -1,6 +1,5 @@
 import type { BaseFieldInput } from './shared'
 import type { Parser } from '../types'
-import { parserWarning } from '../utils'
 
 export interface TextFieldInput extends BaseFieldInput {
   parser: Parser<string>
