@@ -4,7 +4,7 @@ import { colorToRgba } from '../parsers'
 import type { Parser } from '../types'
 import { parserWarning } from '../utils'
 
-interface GradientDefaultValue {
+export interface GradientDefaultValue {
   type: 'solid' | 'linear' | 'radial'
   solidColor: Tinycolor
   stops: {

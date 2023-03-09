@@ -25,10 +25,11 @@ export function createTextField(str?: string, options?: Partial<TextFieldInput>)
 }
 
 export const textFieldParser = ((value) => {
-  const asString = value && value.toString()
-  if (!asString) {
-    parserWarning(value, 'string')
+  if (value === undefined) {
     return ''
   }
-  return asString
+  if (typeof value === 'string') {
+    return value
+  }
+  return value.toString()
 }) satisfies Parser
