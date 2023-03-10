@@ -4,12 +4,15 @@ import { batch } from '@preact/signals-core'
 import type { FolderApi, InputBindingApi, TpPluginBundle } from '@tweakpane/core'
 import * as EssentialsPlugin from '@tweakpane/plugin-essentials'
 import { Pane } from 'tweakpane'
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore missing d.ts
 import * as TweakpaneImagePlugin from 'tweakpane-image-plugin'
 
 import { addFontInput } from './inputs/font'
 import { addNumberInput } from './inputs/number'
 import { addTimecontrolInput } from './inputs/timecontrol'
 import type { Serializable } from '../../../types/utils'
+import type { NumberField, SelectionField, TimeControlField } from '../../fields'
 import type { Model, Parsers, ButtonHandlers } from '../../types'
 
 export function addTweakpaneInputs({
@@ -80,8 +83,7 @@ export function addTweakpaneInputs({
       }
 
       case 'number': {
-        // @ts-expect-error field type is not narrowed correctly
-        input = addNumberInput({ field, folder: folders[folderIndex] })
+        input = addNumberInput({ field: field as NumberField, folder: folders[folderIndex] })
 
         break
       }
@@ -95,19 +97,20 @@ export function addTweakpaneInputs({
         input = folders[folderIndex].addInput({ [field.id]: field.defaultValue }, field.id, {
           label: field.title,
           options: Object.fromEntries([
-            // @ts-expect-error field is not narrowed in this switch
-            ...field.selections.map((selection: Record<'id' | 'title', string>) => [
-              selection.title,
-              selection.id,
-            ]),
+            ...(field as SelectionField).selections.map(
+              (selection: Record<'id' | 'title', string>) => [selection.title, selection.id]
+            ),
           ]),
         })
         break
       }
 
       case 'timecontrol': {
-        // @ts-expect-error field type is not narrowed correctly
-        input = addTimecontrolInput({ folder: folders[folderIndex], field, controls })
+        input = addTimecontrolInput({
+          folder: folders[folderIndex],
+          field: field as TimeControlField,
+          controls,
+        })
 
         break
       }
