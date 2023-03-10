@@ -1,3 +1,1 @@
-import { addTweakpaneInputs } from './tweakpane/init'
-
-export const initGui: typeof addTweakpaneInputs = (ui) => addTweakpaneInputs(ui)
+export { addTweakpaneInputs as initGui } from './tweakpane/init'

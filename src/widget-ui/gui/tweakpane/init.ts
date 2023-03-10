@@ -21,7 +21,7 @@ export function addTweakpaneInputs({
   controls: any
   model: Model
   parsers: Parsers
-  buttonHandlers: ButtonHandlers
+  buttonHandlers?: ButtonHandlers
 }) {
   const pane = new Pane()
 
@@ -70,8 +70,12 @@ export function addTweakpaneInputs({
       }
 
       case 'button': {
-        const button = folders[folderIndex].addButton({ title: field.title })
-        button.on('click', () => buttonHandlers[field.id](field.id))
+        if (!buttonHandlers || !buttonHandlers[field.id]) {
+          console.warn('Unhandled button:', field.id)
+        } else {
+          const button = folders[folderIndex].addButton({ title: field.title })
+          button.on('click', () => buttonHandlers[field.id](field.id))
+        }
         break
       }
 
