@@ -1,6 +1,6 @@
 {
   "name": "@tn-singular/core",
-  "version": "2.1.4",
+  "version": "2.1.5",
   "description": "",
   "main": "./dist/src/index.js",
   "module": "./dist/src/index.js",
