@@ -4,6 +4,7 @@
   "description": "",
   "main": "./dist/src/index.js",
   "module": "./dist/src/index.js",
+  "types": "/dist/index.d.ts",
   "type": "module",
   "scripts": {
     "lint": "tsc & eslint ./",
